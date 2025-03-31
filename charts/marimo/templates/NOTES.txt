@@ -1,0 +1,20 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your Marimo server is now being deployed to your Kubernetes cluster.
+
+{{- if .Values.ingress.enabled }}
+You can access your Marimo instance at:
+{{- range .Values.ingress.hosts }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .host }}
+{{- end }}
+{{- else }}
+To access your Marimo server, run the following commands:
+
+  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "marimo.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:$CONTAINER_PORT
+
+Then open your browser at: http://localhost:8080
+{{- end }}
+
+Enjoy using Marimo for your interactive Python notebooks!
