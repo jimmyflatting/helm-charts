@@ -14,6 +14,45 @@
         }
       }
     },
+    "ingressRoute": {
+      "type": "object",
+      "title": "Traefik IngressRoute Configuration",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enable Traefik IngressRoute",
+          "default": true,
+          "form": true
+        },
+        "host": {
+          "type": "string",
+          "title": "Host",
+          "form": true
+        },
+        "path": {
+          "type": "string",
+          "title": "Path",
+          "default": "/",
+          "form": true
+        },
+        "tls": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enable TLS",
+              "default": true,
+              "form": true
+            },
+            "secretName": {
+              "type": "string",
+              "title": "TLS Secret Name",
+              "form": true
+            }
+          }
+        }
+      }
+    },
     "resources": {
       "type": "object",
       "title": "Resources",
