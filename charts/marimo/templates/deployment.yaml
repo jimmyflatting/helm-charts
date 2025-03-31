@@ -4,6 +4,8 @@ metadata:
   name: {{ include "marimo.fullname" . }}
   labels:
     {{- include "marimo.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook-weight": "5"  # Higher number means later execution
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -25,20 +27,7 @@ spec:
       serviceAccountName: {{ include "marimo.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      # Add init container to verify service account exists
-      initContainers:
-        - name: check-sa-exists
-          image: "bitnami/kubectl:latest"
-          command:
-            - "/bin/bash"
-            - "-c"
-            - |
-              echo "Waiting for service account to be available..."
-              until kubectl get serviceaccount {{ include "marimo.serviceAccountName" . }} -n {{ .Release.Namespace }} &> /dev/null; do
-                echo "ServiceAccount not found yet, waiting..."
-                sleep 2
-              done
-              echo "ServiceAccount is available!"
+      # Remove problematic init container - the service account will be guaranteed to exist
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -66,12 +55,14 @@ spec:
               port: http
             initialDelaySeconds: 30
             periodSeconds: 10
+            failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /api/status
               port: http
-            initialDelaySeconds: 5
+            initialDelaySeconds: 10
             periodSeconds: 5
+            failureThreshold: 3
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- if .Values.persistence.enabled }}

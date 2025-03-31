@@ -14,6 +14,25 @@
         }
       }
     },
+    "serviceAccount": {
+      "type": "object",
+      "title": "Service Account Configuration",
+      "properties": {
+        "create": {
+          "type": "boolean",
+          "title": "Create Service Account",
+          "default": true,
+          "description": "Whether to create a service account",
+          "form": true
+        },
+        "name": {
+          "type": "string",
+          "title": "Service Account Name",
+          "description": "Name of the service account (will be auto-generated if left blank)",
+          "form": true
+        }
+      }
+    },
     "ingressRoute": {
       "type": "object",
       "title": "Traefik IngressRoute Configuration",
