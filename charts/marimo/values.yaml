@@ -54,6 +54,9 @@ ingress:
     - secretName: marimo-tls
       hosts:
         - marimo.platform.datadrivet.ai
+  # Add cert-manager configuration
+  certManager:
+    clusterIssuer: "letsencrypt-prod"
 
 # Add Traefik IngressRoute configuration
 ingressRoute:
@@ -64,6 +67,9 @@ ingressRoute:
   tls:
     enabled: true
     secretName: marimo-tls
+    # Add cert resolver configuration for Traefik
+    certResolver: "le"
+    clusterIssuer: "letsencrypt-prod"
 
 resources:
   limits:

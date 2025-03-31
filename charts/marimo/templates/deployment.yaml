@@ -25,6 +25,20 @@ spec:
       serviceAccountName: {{ include "marimo.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      # Add init container to verify service account exists
+      initContainers:
+        - name: check-sa-exists
+          image: "bitnami/kubectl:latest"
+          command:
+            - "/bin/bash"
+            - "-c"
+            - |
+              echo "Waiting for service account to be available..."
+              until kubectl get serviceaccount {{ include "marimo.serviceAccountName" . }} -n {{ .Release.Namespace }} &> /dev/null; do
+                echo "ServiceAccount not found yet, waiting..."
+                sleep 2
+              done
+              echo "ServiceAccount is available!"
       containers:
         - name: {{ .Chart.Name }}
           securityContext:

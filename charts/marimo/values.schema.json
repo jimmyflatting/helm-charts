@@ -48,6 +48,37 @@
               "type": "string",
               "title": "TLS Secret Name",
               "form": true
+            },
+            "certResolver": {
+              "type": "string",
+              "title": "Cert Resolver",
+              "description": "Traefik cert resolver name",
+              "form": true
+            },
+            "clusterIssuer": {
+              "type": "string",
+              "title": "Cluster Issuer",
+              "default": "letsencrypt-prod",
+              "description": "Cert-manager cluster issuer to use",
+              "form": true
+            }
+          }
+        }
+      }
+    },
+    "ingress": {
+      "type": "object",
+      "title": "Kubernetes Ingress Configuration",
+      "properties": {
+        "certManager": {
+          "type": "object",
+          "properties": {
+            "clusterIssuer": {
+              "type": "string",
+              "title": "Cluster Issuer",
+              "default": "letsencrypt-prod",
+              "description": "Cert-manager cluster issuer to use",
+              "form": true
             }
           }
         }

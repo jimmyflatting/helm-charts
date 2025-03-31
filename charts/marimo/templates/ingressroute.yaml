@@ -5,10 +5,13 @@ metadata:
   name: {{ include "marimo.fullname" . }}
   labels:
     {{- include "marimo.labels" . | nindent 4 }}
-  {{- with .Values.ingressRoute.annotations }}
   annotations:
+    {{- if .Values.ingressRoute.tls.enabled }}
+    cert-manager.io/cluster-issuer: {{ .Values.ingressRoute.tls.clusterIssuer | default "letsencrypt-prod" }}
+    {{- end }}
+    {{- with .Values.ingressRoute.annotations }}
     {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- end }}
 spec:
   entryPoints:
     - websecure
@@ -20,6 +23,11 @@ spec:
           port: {{ .Values.service.port }}
   {{- if .Values.ingressRoute.tls.enabled }}
   tls:
+    {{- if .Values.ingressRoute.tls.secretName }}
     secretName: {{ .Values.ingressRoute.tls.secretName }}
+    {{- end }}
+    {{- if .Values.ingressRoute.tls.certResolver }}
+    certResolver: {{ .Values.ingressRoute.tls.certResolver }}
+    {{- end }}
   {{- end }}
 {{- end }}

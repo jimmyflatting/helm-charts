@@ -7,6 +7,9 @@ You can access your Marimo instance at:
 {{- range .Values.ingress.hosts }}
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .host }}
 {{- end }}
+{{- else if .Values.ingressRoute.enabled }}
+You can access your Marimo instance at:
+  http{{ if .Values.ingressRoute.tls.enabled }}s{{ end }}://{{ .Values.ingressRoute.host }}{{ .Values.ingressRoute.path }}
 {{- else }}
 To access your Marimo server, run the following commands:
 
@@ -16,5 +19,10 @@ To access your Marimo server, run the following commands:
 
 Then open your browser at: http://localhost:8080
 {{- end }}
+
+TROUBLESHOOTING:
+- If you encounter "serviceaccount not found" errors, make sure the service account exists or is created before the deployment
+- If volume provisioning is slow, please be patient as the cloud provider allocates resources
+- For TLS/certificate issues, check your cert-manager configuration and ingress annotations
 
 Enjoy using Marimo for your interactive Python notebooks!
