@@ -1,0 +1,26 @@
+apiVersion: v1
+entries:
+  marimo:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2025-03-31T12:57:54.839790221+02:00"
+    description: A Helm chart for Marimo interactive Python notebooks in Onyxia Datalabs
+    digest: 6fce5b1164db8278541626cb75d080086567c622f0c4f00c3d8cc631bdecf5dd
+    home: https://github.com/marimo-team/marimo
+    keywords:
+    - marimo
+    - python
+    - notebook
+    - interactive
+    - datascience
+    maintainers:
+    - email: jimmy.flatting@knowit.se
+      name: Jimmy Flatting
+    name: marimo
+    sources:
+    - https://github.com/marimo-team/marimo
+    type: application
+    urls:
+    - https://jimmyflatting.github.io/marimo-helm-charts/marimo-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-03-31T12:57:54.839331145+02:00"
