@@ -16,3 +16,10 @@ sources:
 maintainers:
   - name: Jimmy Flatting
     email: jimmy.flatting@knowit.se
+# Add these Onyxia-specific annotations
+annotations:
+  onyxia.sh/category: "notebook"
+  onyxia.sh/logo: "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/public/android-chrome-512x512.png"
+  onyxia.sh/version: "0.1.0"
+  onyxia.sh/description: "Marimo is a reactive notebook for Python"
+  onyxia.sh/displayName: "Marimo Notebook"

@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "title": "Service Configuration",
+      "properties": {
+        "port": {
+          "type": "integer",
+          "title": "Port",
+          "default": 8080,
+          "description": "Port to expose the service"
+        }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "title": "Resources",
+      "properties": {
+        "requests": {
+          "type": "object",
+          "properties": {
+            "cpu": {
+              "type": "string",
+              "title": "CPU request",
+              "default": "500m",
+              "form": true
+            },
+            "memory": {
+              "type": "string",
+              "title": "Memory request",
+              "default": "1Gi",
+              "form": true
+            }
+          }
+        },
+        "limits": {
+          "type": "object",
+          "properties": {
+            "cpu": {
+              "type": "string",
+              "title": "CPU limit",
+              "default": "1000m",
+              "form": true
+            },
+            "memory": {
+              "type": "string",
+              "title": "Memory limit",
+              "default": "2Gi",
+              "form": true
+            }
+          }
+        }
+      }
+    },
+    "persistence": {
+      "type": "object",
+      "title": "Persistence",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enable persistence",
+          "default": true,
+          "form": true
+        },
+        "size": {
+          "type": "string",
+          "title": "Storage size",
+          "default": "10Gi",
+          "form": true
+        }
+      }
+    },
+    "onyxia": {
+      "type": "object",
+      "title": "Onyxia Integration",
+      "properties": {
+        "s3": {
+          "type": "object",
+          "title": "S3 Integration",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enable S3 Integration",
+              "default": true,
+              "form": true
+            }
+          }
+        },
+        "auth": {
+          "type": "object",
+          "title": "Authentication",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enable OIDC Authentication",
+              "default": true,
+              "form": true
+            }
+          }
+        }
+      }
+    }
+  }
+}
