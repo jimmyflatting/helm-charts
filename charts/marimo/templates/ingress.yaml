@@ -3,8 +3,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "marimo.fullname" . }}
+  labels:
+    onyxia/service: "true"
   annotations:
     {{- toYaml .Values.ingress.annotations | nindent 4 }}
+    onyxia/service: "true"
+    onyxia/service-type: "http"
 spec:
   rules:
     {{- range .Values.ingress.hosts }}
@@ -18,7 +22,7 @@ spec:
               service:
                 name: {{ include "marimo.fullname" $ }}
                 port:
-                  number: http
+                  number: {{ $.Values.service.port }}
           {{- end }}
     {{- end }}
   {{- if .Values.ingress.tls }}
