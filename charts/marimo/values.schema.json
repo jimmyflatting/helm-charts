@@ -152,7 +152,7 @@
             "properties": {
               "cpu": {
                 "type": "string",
-                "description": "CPU limit.",
+                "description": "CPU limit (e.g. '500m', '1').",
                 "helmValuesSchema": {
                   "type": "string",
                   "description": "CPU limit (e.g. '500m', '1')."
@@ -160,7 +160,7 @@
               },
               "memory": {
                 "type": "string",
-                "description": "Memory limit.",
+                "description": "Memory limit (e.g. '512Mi', '1Gi').",
                 "helmValuesSchema": {
                   "type": "string",
                   "description": "Memory limit (e.g. '512Mi', '1Gi')."
@@ -173,7 +173,7 @@
             "properties": {
               "cpu": {
                 "type": "string",
-                "description": "CPU request.",
+                "description": "CPU request (e.g. '250m', '500m').",
                 "helmValuesSchema": {
                   "type": "string",
                   "description": "CPU request (e.g. '250m', '500m')."
@@ -181,7 +181,7 @@
               },
               "memory": {
                 "type": "string",
-                "description": "Memory request.",
+                "description": "Memory request (e.g. '256Mi', '512Mi').",
                 "helmValuesSchema": {
                   "type": "string",
                   "description": "Memory request (e.g. '256Mi', '512Mi')."
