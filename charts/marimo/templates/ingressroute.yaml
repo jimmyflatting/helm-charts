@@ -8,10 +8,8 @@ metadata:
   {{- with .Values.ingressRoute.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
-    {{- if $.Values.ingressRoute.tls.enabled }}
-    cert-manager.io/cluster-issuer: {{ $.Values.ingressRoute.tls.clusterIssuer | default "letsencrypt-prod" | quote }}
-    {{- end }}
-  {{- else if .Values.ingressRoute.tls.enabled }}
+  {{- end }}
+  {{- if .Values.ingressRoute.tls.enabled }}
   annotations:
     cert-manager.io/cluster-issuer: {{ .Values.ingressRoute.tls.clusterIssuer | default "letsencrypt-prod" | quote }}
   {{- end }}

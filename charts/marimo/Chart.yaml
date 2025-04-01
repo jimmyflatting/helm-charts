@@ -4,6 +4,7 @@ description: A Helm chart for Marimo interactive Python notebooks in Onyxia Data
 type: application
 version: 0.1.0
 appVersion: "latest"
+icon: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/public/android-chrome-512x512.png
 keywords:
   - marimo
   - python
