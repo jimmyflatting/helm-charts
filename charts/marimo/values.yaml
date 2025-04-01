@@ -50,3 +50,19 @@ env:
     value: "0.0.0.0"
   - name: MARIMO_SERVER_PORT
     value: "8000"
+
+# ServiceAccount configuration
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+# Autoscaling configuration
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+  scaleDownDelaySeconds: 300
+  scaleUpDelaySeconds: 0
