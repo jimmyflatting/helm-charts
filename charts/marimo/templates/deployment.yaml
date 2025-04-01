@@ -5,7 +5,8 @@ metadata:
   labels:
     {{- include "marimo.labels" . | nindent 4 }}
     onyxia.instance: {{ .Values.onyxia.instance.name }}
-    onyxia.project: {{ .Values.onyxiaSchema.catalog }}
+    onyxia.project: {{ .Values.onyxia.instance.name }}
+    onyxia.region: {{ .Values.onyxia.instance.name }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -20,16 +21,16 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       onyxia.instance: {{ .Values.onyxia.instance.name }}
-      onyxia.project: {{ .Values.onyxiaSchema.catalog }}
-      onyxia.region: {{ .Values.onyxiaSchema.catalog }}
+      onyxia.project: {{ .Values.onyxia.instance.name }}
+      onyxia.region: {{ .Values.onyxia.instance.name }}
       labels:
         {{- include "marimo.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
         onyxia.instance: {{ .Values.onyxia.instance.name }}
-        onyxia.project: {{ .Values.onyxiaSchema.catalog }}
-        onyxia.region: {{ .Values.onyxiaSchema.catalog }}
+        onyxia.project: {{ .Values.onyxia.instance.name }}
+        onyxia.region: {{ .Values.onyxia.instance.name }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -48,6 +49,7 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          workingDir: /home/marimo
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
@@ -58,26 +60,34 @@ spec:
           {{- end }}
           command: ["marimo"]
           args: ["edit", "--port", "8000", "--allow-origins", "*"]
-          {{- with .Values.livenessProbe }}
           livenessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.readinessProbe }}
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
           readinessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
+            - name: notebook-data
+              mountPath: /home/marimo
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: notebook-data
+          emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

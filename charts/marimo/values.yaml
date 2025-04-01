@@ -19,6 +19,16 @@ onyxia:
         value: "0.0.0.0"
       - name: MARIMO_SERVER_PORT
         value: "8000"
+      - name: PYTHONPATH
+        value: "/home/marimo"
+      - name: HOME
+        value: "/home/marimo"
+      - name: ONYXIA_INSTANCE_NAME
+        value: "marimo"
+      - name: ONYXIA_PROJECT
+        value: "marimo"
+      - name: ONYXIA_REGION
+        value: "marimo"
     resources:
       requests:
         cpu: "100m"
@@ -33,11 +43,16 @@ onyxia:
     serviceAccount:
       enabled: true
       role: "view"
+    annotations:
+      onyxia.region: marimo
+      onyxia.project: marimo
+      onyxia.instance: marimo
 
 # Chart specific configurations
 image:
   repository: ghcr.io/marimo-team/marimo
   tag: "latest"
+  pullPolicy: IfNotPresent
 
 # Service configuration
 service:
@@ -74,6 +89,16 @@ env:
     value: "0.0.0.0"
   - name: MARIMO_SERVER_PORT
     value: "8000"
+  - name: PYTHONPATH
+    value: "/home/marimo"
+  - name: HOME
+    value: "/home/marimo"
+  - name: ONYXIA_INSTANCE_NAME
+    value: "marimo"
+  - name: ONYXIA_PROJECT
+    value: "marimo"
+  - name: ONYXIA_REGION
+    value: "marimo"
 
 # ServiceAccount configuration
 serviceAccount:
