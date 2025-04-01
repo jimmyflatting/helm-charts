@@ -22,19 +22,25 @@ jobs:
         with:
           version: v3.12.0
 
+      - name: Install dependencies
+        run: |
+          helm dependency update charts/library-chart
+          helm dependency update charts/vscode-python
+      
       - name: Lint Helm
         run: |
-          helm lint charts/marimo --values charts/marimo/values.yaml
-          helm template charts/marimo --values charts/marimo/values.yaml
+          helm lint charts/marimo
+          helm lint charts/vscode-python
+          helm lint charts/library-chart
+
 
       - name: Package charts
         run: |
           mkdir -p packaged-charts
-          for chart in charts/*; do
-            if [ -d "$chart" ]; then
-              helm package "$chart" -d packaged-charts
-            fi
-          done
+          helm package charts/marimo
+          helm package charts/vscode-python
+          helm package charts/library-chart
+          mv *.tgz packaged-charts
 
       - name: Generate index.yaml
         run: |
