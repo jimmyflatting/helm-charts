@@ -14,7 +14,6 @@ ingress:
     traefik.ingress.kubernetes.io/router.middlewares: default-stripprefix@kubernetescrd
     traefik.ingress.kubernetes.io/service.serversscheme: http
     traefik.ingress.kubernetes.io/service.passhostheader: "true"
-    traefik.ingress.kubernetes.io/router.rule: "Host(`marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}`)"
   tls: []
 resources:
   limits:
@@ -26,20 +25,30 @@ resources:
 nodeSelector: {}
 tolerations: []
 affinity: {}
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+podSecurityContext:
+  fsGroup: 100
+securityContext: {}
+environment:
+  user: onyxia
+  group: users
+networking:
+  type: ClusterIP
+  clusterIP: None
+  service:
+    port: 8080
 onyxia:
   friendlyName: "Marimo"
+  description: "Marimo is a reactive Python notebook that's designed to be used both as an interactive development environment and as a data app framework."
+  icon: "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg"
   service:
     port: 8080
   randomSubdomain: ${ONYXIA_RANDOM_SUBDOMAIN}
   domain: ${ONYXIA_DOMAIN}
   environment:
-    ONYXIA_SERVICE_PORT: "8080"
-    ONYXIA_SERVICE_TYPE: "http"
-    ONYXIA_RANDOM_SUBDOMAIN: ${ONYXIA_RANDOM_SUBDOMAIN}
-    ONYXIA_DOMAIN: ${ONYXIA_DOMAIN}
-  popup:
-    enabled: true
-    title: "Marimo"
-    description: "Marimo is a reactive Python notebook that's designed to be used both as an interactive development environment and as a data app framework."
-    url: "https://marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}"
-    icon: "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg"
+    ONYXIA_URL: "https://marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}"
+    ONYXIA_RANDOM_SUBDOMAIN: "${ONYXIA_RANDOM_SUBDOMAIN}"
+    ONYXIA_DOMAIN: "${ONYXIA_DOMAIN}"

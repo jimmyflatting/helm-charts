@@ -15,11 +15,10 @@ metadata:
     onyxia/service-type: "http"
     onyxia/service-port: "8080"
     onyxia/type: "service"
-    onyxia/popup: "true"
-    onyxia/popup-title: "Marimo"
-    onyxia/popup-description: "Marimo is a reactive Python notebook that's designed to be used both as an interactive development environment and as a data app framework."
-    onyxia/popup-url: "https://marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}"
-    onyxia/popup-icon: "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg"
+    onyxia/friendly-name: "Marimo"
+    onyxia/description: "Marimo is a reactive Python notebook that's designed to be used both as an interactive development environment and as a data app framework."
+    onyxia/url: "https://marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}"
+    onyxia/icon: "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -39,15 +38,19 @@ spec:
         onyxia/service-port: "8080"
         onyxia/service-type: "http"
         onyxia/type: "service"
-        onyxia/popup: "true"
-        onyxia/popup-title: "Marimo"
-        onyxia/popup-description: "Marimo is a reactive Python notebook that's designed to be used both as an interactive development environment and as a data app framework."
-        onyxia/popup-url: "https://marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}"
-        onyxia/popup-icon: "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg"
+        onyxia/friendly-name: "Marimo"
+        onyxia/description: "Marimo is a reactive Python notebook that's designed to be used both as an interactive development environment and as a data app framework."
+        onyxia/url: "https://marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}"
+        onyxia/icon: "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg"
     spec:
+      serviceAccountName: {{ include "marimo.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
-          image: ghcr.io/marimo-team/marimo:latest
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
@@ -58,6 +61,12 @@ spec:
               value: "8080"
             - name: MARIMO_HOST
               value: "0.0.0.0"
+            - name: ONYXIA_URL
+              value: "https://marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}"
+            - name: ONYXIA_RANDOM_SUBDOMAIN
+              value: "${ONYXIA_RANDOM_SUBDOMAIN}"
+            - name: ONYXIA_DOMAIN
+              value: "${ONYXIA_DOMAIN}"
             {{- range $key, $value := .Values.onyxia.environment }}
             - name: {{ $key }}
               value: {{ $value | quote }}
@@ -72,7 +81,7 @@ spec:
             httpGet:
               path: /
               port: http
-            initialDelaySeconds: 30
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
             successThreshold: 1
@@ -81,7 +90,7 @@ spec:
             httpGet:
               path: /
               port: http
-            initialDelaySeconds: 60
+            initialDelaySeconds: 30
             periodSeconds: 10
             timeoutSeconds: 5
             successThreshold: 1
