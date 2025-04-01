@@ -204,8 +204,36 @@
       "affinity": {
         "type": "object",
         "description": "Pod affinity and anti-affinity rules."
+      },
+      "onyxia": {
+        "type": "object",
+        "properties": {
+          "friendlyName": {
+            "type": "string",
+            "default": "Marimo",
+            "description": "Friendly name for the service in Onyxia UI.",
+            "helmValuesSchema": {
+              "type": "string",
+              "description": "Friendly name for the service in Onyxia UI."
+            }
+          },
+          "service": {
+            "type": "object",
+            "properties": {
+              "port": {
+                "type": "integer",
+                "default": 80,
+                "description": "Port on which the service is exposed.",
+                "helmValuesSchema": {
+                  "type": "integer",
+                  "description": "Port on which the service is exposed."
+                }
+              }
+            }
+          }
+        }
       }
     },
-    "required": ["replicaCount", "image", "service"]
+    "required": ["replicaCount", "image", "service", "onyxia"]
   }
   
