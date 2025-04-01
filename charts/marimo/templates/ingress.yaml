@@ -3,9 +3,13 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "marimo.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     onyxia/service: "true"
     onyxia/type: "service"
+    app: {{ include "marimo.name" . }}
+    chart: {{ include "marimo.chart" . }}
+    release: {{ .Release.Name }}
   annotations:
     {{- toYaml .Values.ingress.annotations | nindent 4 }}
     onyxia/service: "true"
@@ -15,6 +19,9 @@ metadata:
     onyxia/random-subdomain: "true"
     traefik.ingress.kubernetes.io/router.entrypoints: web
     traefik.ingress.kubernetes.io/router.tls: "false"
+    traefik.ingress.kubernetes.io/router.middlewares: default-stripprefix@kubernetescrd
+    traefik.ingress.kubernetes.io/service.serversscheme: http
+    traefik.ingress.kubernetes.io/service.passhostheader: "true"
 spec:
   ingressClassName: traefik
   rules:
