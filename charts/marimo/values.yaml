@@ -26,16 +26,16 @@ onyxia:
       - name: ONYXIA_INSTANCE_NAME
         value: "marimo"
       - name: ONYXIA_PROJECT
-        value: "marimo"
+        value: "single-project"
       - name: ONYXIA_REGION
-        value: "marimo"
+        value: "default"
     resources:
       requests:
         cpu: "100m"
-        memory: "2Gi"
+        memory: "1Gi"
       limits:
-        cpu: "5000m"
-        memory: "50Gi"
+        cpu: "2000m"
+        memory: "4Gi"
     securityContext:
       runAsNonRoot: true
       runAsUser: 1000
@@ -44,8 +44,8 @@ onyxia:
       enabled: true
       role: "view"
     annotations:
-      onyxia.region: marimo
-      onyxia.project: marimo
+      onyxia.region: default
+      onyxia.project: single-project
       onyxia.instance: marimo
 
 # Chart specific configurations
@@ -72,10 +72,10 @@ ingress:
 resources:
   requests:
     cpu: "100m"
-    memory: "2Gi"
+    memory: "1Gi"
   limits:
-    cpu: "5000m"
-    memory: "50Gi"
+    cpu: "2000m"
+    memory: "4Gi"
 
 # Security context
 securityContext:
@@ -96,9 +96,9 @@ env:
   - name: ONYXIA_INSTANCE_NAME
     value: "marimo"
   - name: ONYXIA_PROJECT
-    value: "marimo"
+    value: "single-project"
   - name: ONYXIA_REGION
-    value: "marimo"
+    value: "default"
 
 # ServiceAccount configuration
 serviceAccount:
