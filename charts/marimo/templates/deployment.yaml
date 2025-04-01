@@ -28,11 +28,11 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 2718
+              containerPort: 8080
               protocol: TCP
           env:
             - name: MARIMO_PORT
-              value: "2718"
+              value: "8080"
             - name: MARIMO_HOST
               value: "0.0.0.0"
           startupProbe:
