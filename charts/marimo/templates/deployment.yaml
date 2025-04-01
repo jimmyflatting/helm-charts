@@ -6,6 +6,9 @@ metadata:
     app: {{ include "marimo.name" . }}
     chart: {{ include "marimo.chart" . }}
     release: {{ .Release.Name }}
+  annotations:
+    debug-image-repo: {{ .Values.image.repository }}
+    debug-image-tag: {{ .Values.image.tag }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
