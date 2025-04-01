@@ -1,33 +1,15 @@
 apiVersion: v1
 entries:
   marimo:
-  - annotations:
-      onyxia.sh/category: notebook
-      onyxia.sh/description: Marimo is a reactive notebook for Python
-      onyxia.sh/displayName: Marimo Notebook
-      onyxia.sh/logo: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/public/android-chrome-512x512.png
-      onyxia.sh/version: 0.1.0
-    apiVersion: v2
-    appVersion: latest
-    created: "2025-04-01T09:19:01.879962624Z"
-    description: A Helm chart for Marimo interactive Python notebooks in Onyxia Datalabs
-    digest: c519d396a5a37d751e3e32b8f1ee84e6b7a35a5bdc3901175d9e3abff49bde90
-    home: https://github.com/marimo-team/marimo
-    icon: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/public/android-chrome-512x512.png
-    keywords:
-    - marimo
-    - python
-    - notebook
-    - interactive
-    - datascience
-    maintainers:
-    - email: jimmy.flatting@knowit.se
-      name: Jimmy Flatting
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2025-04-01T09:48:16.07274224Z"
+    description: A Helm chart for Kubernetes
+    digest: 6817a45d3c98b7b0021bd95fb15b8b5b0f21b0194b2fdcfe74079cfd6bad21fe
+    icon: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/logo.png
     name: marimo
-    sources:
-    - https://github.com/marimo-team/marimo
     type: application
     urls:
     - https://jimmyflatting.github.io/helm-charts/marimo-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-01T09:19:01.879456245Z"
+generated: "2025-04-01T09:48:16.072173143Z"
