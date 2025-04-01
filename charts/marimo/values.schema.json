@@ -1,0 +1,374 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["onyxia", "image", "service", "resources"],
+  "properties": {
+    "onyxia": {
+      "type": "object",
+      "required": ["enabled", "instance"],
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "instance": {
+          "type": "object",
+          "required": ["name", "friendlyName", "description", "category", "ports", "env", "resources"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "default": "marimo"
+            },
+            "friendlyName": {
+              "type": "string",
+              "default": "Marimo Notebook"
+            },
+            "description": {
+              "type": "string",
+              "default": "Interactive Python notebooks with Marimo"
+            },
+            "category": {
+              "type": "string",
+              "default": "Development"
+            },
+            "logo": {
+              "type": "string",
+              "default": "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/logo.png"
+            },
+            "initScript": {
+              "type": "string",
+              "default": "pip install marimo\nmarimo init my_notebook.py"
+            },
+            "ports": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["name", "port", "targetPort"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "default": "http"
+                  },
+                  "port": {
+                    "type": "integer",
+                    "default": 8000
+                  },
+                  "targetPort": {
+                    "type": "integer",
+                    "default": 8000
+                  }
+                }
+              }
+            },
+            "env": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["name", "value"],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "resources": {
+              "type": "object",
+              "required": ["requests", "limits"],
+              "properties": {
+                "requests": {
+                  "type": "object",
+                  "required": ["cpu", "memory"],
+                  "properties": {
+                    "cpu": {
+                      "type": "string",
+                      "default": "500m"
+                    },
+                    "memory": {
+                      "type": "string",
+                      "default": "1Gi"
+                    }
+                  }
+                },
+                "limits": {
+                  "type": "object",
+                  "required": ["cpu", "memory"],
+                  "properties": {
+                    "cpu": {
+                      "type": "string",
+                      "default": "2"
+                    },
+                    "memory": {
+                      "type": "string",
+                      "default": "4Gi"
+                    }
+                  }
+                }
+              }
+            },
+            "securityContext": {
+              "type": "object",
+              "properties": {
+                "runAsNonRoot": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "runAsUser": {
+                  "type": "integer",
+                  "default": 1000
+                },
+                "fsGroup": {
+                  "type": "integer",
+                  "default": 1000
+                }
+              }
+            },
+            "serviceAccount": {
+              "type": "object",
+              "properties": {
+                "create": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "name": {
+                  "type": "string",
+                  "default": ""
+                },
+                "annotations": {
+                  "type": "object",
+                  "default": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "image": {
+      "type": "object",
+      "required": ["repository", "tag"],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "default": "ghcr.io/marimo-team/marimo"
+        },
+        "tag": {
+          "type": "string",
+          "default": "latest"
+        }
+      }
+    },
+    "service": {
+      "type": "object",
+      "required": ["type", "port"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "default": "ClusterIP"
+        },
+        "port": {
+          "type": "integer",
+          "default": 8000
+        }
+      }
+    },
+    "ingress": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "className": {
+          "type": "string",
+          "default": "nginx"
+        },
+        "annotations": {
+          "type": "object",
+          "default": {
+            "nginx.ingress.kubernetes.io/proxy-body-size": "50m",
+            "nginx.ingress.kubernetes.io/proxy-read-timeout": "3600",
+            "nginx.ingress.kubernetes.io/proxy-send-timeout": "3600"
+          }
+        }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "required": ["requests", "limits"],
+      "properties": {
+        "requests": {
+          "type": "object",
+          "required": ["cpu", "memory"],
+          "properties": {
+            "cpu": {
+              "type": "string",
+              "default": "500m"
+            },
+            "memory": {
+              "type": "string",
+              "default": "1Gi"
+            }
+          }
+        },
+        "limits": {
+          "type": "object",
+          "required": ["cpu", "memory"],
+          "properties": {
+            "cpu": {
+              "type": "string",
+              "default": "2"
+            },
+            "memory": {
+              "type": "string",
+              "default": "4Gi"
+            }
+          }
+        }
+      }
+    },
+    "securityContext": {
+      "type": "object",
+      "properties": {
+        "runAsNonRoot": {
+          "type": "boolean",
+          "default": true
+        },
+        "runAsUser": {
+          "type": "integer",
+          "default": 1000
+        },
+        "fsGroup": {
+          "type": "integer",
+          "default": 1000
+        }
+      }
+    },
+    "env": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "value"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "serviceAccount": {
+      "type": "object",
+      "properties": {
+        "create": {
+          "type": "boolean",
+          "default": true
+        },
+        "name": {
+          "type": "string",
+          "default": ""
+        },
+        "annotations": {
+          "type": "object",
+          "default": {}
+        }
+      }
+    },
+    "autoscaling": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "minReplicas": {
+          "type": "integer",
+          "default": 1
+        },
+        "maxReplicas": {
+          "type": "integer",
+          "default": 100
+        },
+        "targetCPUUtilizationPercentage": {
+          "type": "integer",
+          "default": 80
+        },
+        "targetMemoryUtilizationPercentage": {
+          "type": "integer",
+          "default": 80
+        },
+        "scaleDownDelaySeconds": {
+          "type": "integer",
+          "default": 300
+        },
+        "scaleUpDelaySeconds": {
+          "type": "integer",
+          "default": 0
+        }
+      }
+    },
+    "onyxiaSchema": {
+      "type": "object",
+      "required": ["version", "catalog", "chart", "type"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "default": "0.1.0"
+        },
+        "catalog": {
+          "type": "string",
+          "default": "vibe-coding"
+        },
+        "chart": {
+          "type": "string",
+          "default": "marimo"
+        },
+        "type": {
+          "type": "string",
+          "default": "application"
+        },
+        "maintainers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "email"],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "home": {
+          "type": "string"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+} 
