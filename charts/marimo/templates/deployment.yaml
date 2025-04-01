@@ -24,7 +24,12 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 2718
               protocol: TCP
+          env:
+            - name: MARIMO_PORT
+              value: "2718"
+            - name: MARIMO_HOST
+              value: "0.0.0.0"
           resources:
-            {{- toYaml .Values.resources | nindent 16 }}
+            {{- toYaml .Values.resources | nindent 12 }}

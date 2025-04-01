@@ -1,11 +1,11 @@
 replicaCount: 1
 image:
-  repository: marimo
+  repository: ghcr.io/marimo-team/marimo
   tag: latest
   pullPolicy: IfNotPresent
 service:
   type: ClusterIP
-  port: 80
+  port: 2718
 ingress:
   enabled: false
   annotations: {}
@@ -15,11 +15,17 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
   tls: []
-resources: {}
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 100m
+    memory: 128Mi
 nodeSelector: {}
 tolerations: []
 affinity: {}
 onyxia:
   friendlyName: "Marimo"
   service:
-    port: 80
+    port: 2718
