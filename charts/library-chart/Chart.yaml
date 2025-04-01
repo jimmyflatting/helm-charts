@@ -1,4 +1,0 @@
-apiVersion: v2
-name: library-chart
-type: library
-version: 1.5.21
