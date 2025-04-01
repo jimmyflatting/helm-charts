@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "required": ["onyxia", "image", "service", "resources"],
   "properties": {
@@ -10,35 +10,35 @@
         "enabled": {
           "type": "boolean",
           "const": true,
-          "description": "This value must always be true for Onyxia integration"
+          "description": "Enable Onyxia integration"
         },
         "instance": {
           "type": "object",
-          "required": ["name", "friendlyName", "description", "category", "ports", "env", "resources"],
+          "required": ["name", "friendlyName", "description", "category", "logo", "initScript", "ports", "env", "resources", "securityContext", "serviceAccount", "annotations"],
           "properties": {
             "name": {
               "type": "string",
-              "default": "marimo"
+              "description": "Instance name"
             },
             "friendlyName": {
               "type": "string",
-              "default": "Marimo Notebook"
+              "description": "Friendly name for the instance"
             },
             "description": {
               "type": "string",
-              "default": "Interactive Python notebooks with Marimo"
+              "description": "Instance description"
             },
             "category": {
               "type": "string",
-              "default": "Development"
+              "description": "Instance category"
             },
             "logo": {
               "type": "string",
-              "default": "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/logo.png"
+              "description": "Logo URL"
             },
             "initScript": {
               "type": "string",
-              "default": "pip install marimo\nmarimo init my_notebook.py"
+              "description": "Initialization script"
             },
             "ports": {
               "type": "array",
@@ -47,16 +47,13 @@
                 "required": ["name", "port", "targetPort"],
                 "properties": {
                   "name": {
-                    "type": "string",
-                    "default": "http"
+                    "type": "string"
                   },
                   "port": {
-                    "type": "integer",
-                    "default": 8000
+                    "type": "integer"
                   },
                   "targetPort": {
-                    "type": "integer",
-                    "default": 8000
+                    "type": "integer"
                   }
                 }
               }
@@ -77,33 +74,46 @@
               }
             },
             "resources": {
-              "type": "object",
               "x-onyxia": {
                 "overwriteSchemaWith": "ide/resources.json"
               }
             },
             "securityContext": {
               "type": "object",
+              "required": ["runAsNonRoot", "runAsUser", "fsGroup"],
               "properties": {
                 "runAsNonRoot": {
                   "type": "boolean",
-                  "const": true,
-                  "description": "This value must always be true for security"
+                  "const": true
                 },
                 "runAsUser": {
-                  "type": "integer",
-                  "default": 1000
+                  "type": "integer"
                 },
                 "fsGroup": {
-                  "type": "integer",
-                  "default": 1000
+                  "type": "integer"
                 }
               }
             },
             "serviceAccount": {
-              "type": "object",
               "x-onyxia": {
                 "overwriteSchemaWith": "ide/role.json"
+              }
+            },
+            "annotations": {
+              "type": "object",
+              "required": ["onyxia.region", "onyxia.project", "onyxia.instance"],
+              "properties": {
+                "onyxia.region": {
+                  "type": "string",
+                  "const": "default"
+                },
+                "onyxia.project": {
+                  "type": "string",
+                  "const": "single-project"
+                },
+                "onyxia.instance": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -112,15 +122,17 @@
     },
     "image": {
       "type": "object",
-      "required": ["repository", "tag"],
+      "required": ["repository", "tag", "pullPolicy"],
       "properties": {
         "repository": {
-          "type": "string",
-          "default": "ghcr.io/marimo-team/marimo"
+          "type": "string"
         },
         "tag": {
+          "type": "string"
+        },
+        "pullPolicy": {
           "type": "string",
-          "default": "latest"
+          "enum": ["Always", "IfNotPresent", "Never"]
         }
       }
     },
@@ -130,56 +142,31 @@
       "properties": {
         "type": {
           "type": "string",
-          "default": "ClusterIP"
+          "enum": ["ClusterIP", "NodePort", "LoadBalancer"]
         },
         "port": {
-          "type": "integer",
-          "default": 8000
-        }
-      }
-    },
-    "ingress": {
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "type": "boolean",
-          "default": true
-        },
-        "className": {
-          "type": "string",
-          "default": "nginx"
-        },
-        "annotations": {
-          "type": "object",
-          "default": {
-            "nginx.ingress.kubernetes.io/proxy-body-size": "50m",
-            "nginx.ingress.kubernetes.io/proxy-read-timeout": "3600",
-            "nginx.ingress.kubernetes.io/proxy-send-timeout": "3600"
-          }
+          "type": "integer"
         }
       }
     },
     "resources": {
-      "type": "object",
       "x-onyxia": {
         "overwriteSchemaWith": "ide/resources.json"
       }
     },
     "securityContext": {
       "type": "object",
+      "required": ["runAsNonRoot", "runAsUser", "fsGroup"],
       "properties": {
         "runAsNonRoot": {
           "type": "boolean",
-          "const": true,
-          "description": "This value must always be true for security"
+          "const": true
         },
         "runAsUser": {
-          "type": "integer",
-          "default": 1000
+          "type": "integer"
         },
         "fsGroup": {
-          "type": "integer",
-          "default": 1000
+          "type": "integer"
         }
       }
     },
@@ -199,63 +186,53 @@
       }
     },
     "serviceAccount": {
-      "type": "object",
       "x-onyxia": {
         "overwriteSchemaWith": "ide/role.json"
       }
     },
     "autoscaling": {
       "type": "object",
+      "required": ["enabled", "minReplicas", "maxReplicas", "targetCPUUtilizationPercentage", "targetMemoryUtilizationPercentage", "scaleDownDelaySeconds", "scaleUpDelaySeconds"],
       "properties": {
         "enabled": {
-          "type": "boolean",
-          "default": false
+          "type": "boolean"
         },
         "minReplicas": {
-          "type": "integer",
-          "default": 1
+          "type": "integer"
         },
         "maxReplicas": {
-          "type": "integer",
-          "default": 100
+          "type": "integer"
         },
         "targetCPUUtilizationPercentage": {
-          "type": "integer",
-          "default": 80
+          "type": "integer"
         },
         "targetMemoryUtilizationPercentage": {
-          "type": "integer",
-          "default": 80
+          "type": "integer"
         },
         "scaleDownDelaySeconds": {
-          "type": "integer",
-          "default": 300
+          "type": "integer"
         },
         "scaleUpDelaySeconds": {
-          "type": "integer",
-          "default": 0
+          "type": "integer"
         }
       }
     },
     "onyxiaSchema": {
       "type": "object",
-      "required": ["version", "catalog", "chart", "type"],
+      "required": ["version", "catalog", "chart", "type", "maintainers", "keywords", "home", "sources", "dependencies"],
       "properties": {
         "version": {
-          "type": "string",
-          "default": "0.1.0"
+          "type": "string"
         },
         "catalog": {
-          "type": "string",
-          "default": "vibe-coding"
+          "type": "string"
         },
         "chart": {
-          "type": "string",
-          "default": "marimo"
+          "type": "string"
         },
         "type": {
           "type": "string",
-          "default": "application"
+          "enum": ["application", "library"]
         },
         "maintainers": {
           "type": "array",

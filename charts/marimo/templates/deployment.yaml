@@ -5,8 +5,8 @@ metadata:
   labels:
     {{- include "marimo.labels" . | nindent 4 }}
     onyxia.instance: {{ .Values.onyxia.instance.name }}
-    onyxia.project: {{ .Values.onyxia.instance.name }}
-    onyxia.region: {{ .Values.onyxia.instance.name }}
+    onyxia.project: {{ .Values.onyxia.instance.annotations.onyxia.project }}
+    onyxia.region: {{ .Values.onyxia.instance.annotations.onyxia.region }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -21,16 +21,16 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       onyxia.instance: {{ .Values.onyxia.instance.name }}
-      onyxia.project: {{ .Values.onyxia.instance.name }}
-      onyxia.region: {{ .Values.onyxia.instance.name }}
+      onyxia.project: {{ .Values.onyxia.instance.annotations.onyxia.project }}
+      onyxia.region: {{ .Values.onyxia.instance.annotations.onyxia.region }}
       labels:
         {{- include "marimo.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
         onyxia.instance: {{ .Values.onyxia.instance.name }}
-        onyxia.project: {{ .Values.onyxia.instance.name }}
-        onyxia.region: {{ .Values.onyxia.instance.name }}
+        onyxia.project: {{ .Values.onyxia.instance.annotations.onyxia.project }}
+        onyxia.region: {{ .Values.onyxia.instance.annotations.onyxia.region }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
