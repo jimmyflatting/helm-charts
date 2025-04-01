@@ -8,6 +8,24 @@ image:
 service:
   port: 8080
 
+serviceAccount:
+  create: true
+  name: ""
+
+ingressRoute:
+  enabled: true
+  host: ""  # Will be set by Onyxia
+  path: "/"
+  tls:
+    enabled: true
+    secretName: ""  # Will be set by Onyxia
+    certResolver: "le"
+    clusterIssuer: "letsencrypt-prod"
+
+ingress:
+  certManager:
+    clusterIssuer: "letsencrypt-prod"
+
 resources:
   limits:
     cpu: 1000m
@@ -25,3 +43,10 @@ persistence:
 environment:
   MARIMO_PORT: 8080
   MARIMO_ALLOW_ORIGINS: "*"
+
+# Onyxia integration
+onyxia:
+  s3:
+    enabled: false
+  auth:
+    enabled: false

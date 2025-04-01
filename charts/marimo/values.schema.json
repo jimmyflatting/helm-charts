@@ -16,6 +16,98 @@
         }
       }
     },
+    "serviceAccount": {
+      "type": "object",
+      "title": "Service Account Configuration",
+      "properties": {
+        "create": {
+          "type": "boolean",
+          "title": "Create Service Account",
+          "default": true,
+          "description": "Whether to create a service account",
+          "form": true
+        },
+        "name": {
+          "type": "string",
+          "title": "Service Account Name",
+          "description": "Name of the service account (will be auto-generated if left blank)",
+          "form": true
+        }
+      }
+    },
+    "ingressRoute": {
+      "type": "object",
+      "title": "Traefik IngressRoute Configuration",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enable Traefik IngressRoute",
+          "default": true,
+          "form": true
+        },
+        "host": {
+          "type": "string",
+          "title": "Host",
+          "description": "Host for the IngressRoute (will be set by Onyxia)",
+          "form": true
+        },
+        "path": {
+          "type": "string",
+          "title": "Path",
+          "default": "/",
+          "form": true
+        },
+        "tls": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enable TLS",
+              "default": true,
+              "form": true
+            },
+            "secretName": {
+              "type": "string",
+              "title": "TLS Secret Name",
+              "description": "Name of the TLS secret (will be set by Onyxia)",
+              "form": true
+            },
+            "certResolver": {
+              "type": "string",
+              "title": "Cert Resolver",
+              "default": "le",
+              "description": "Traefik cert resolver name",
+              "form": true
+            },
+            "clusterIssuer": {
+              "type": "string",
+              "title": "Cluster Issuer",
+              "default": "letsencrypt-prod",
+              "description": "Cert-manager cluster issuer to use",
+              "form": true
+            }
+          }
+        }
+      }
+    },
+    "ingress": {
+      "type": "object",
+      "title": "Kubernetes Ingress Configuration",
+      "properties": {
+        "certManager": {
+          "type": "object",
+          "properties": {
+            "clusterIssuer": {
+              "type": "string",
+              "title": "Cluster Issuer",
+              "default": "letsencrypt-prod",
+              "description": "Cert-manager cluster issuer to use",
+              "form": true
+            }
+          }
+        }
+      }
+    },
     "resources": {
       "type": "object",
       "title": "Resources",
@@ -75,6 +167,36 @@
           "title": "Storage size",
           "default": "10Gi",
           "form": true
+        }
+      }
+    },
+    "onyxia": {
+      "type": "object",
+      "title": "Onyxia Integration",
+      "properties": {
+        "s3": {
+          "type": "object",
+          "title": "S3 Integration",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enable S3 Integration",
+              "default": false,
+              "form": true
+            }
+          }
+        },
+        "auth": {
+          "type": "object",
+          "title": "Authentication",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enable OIDC Authentication",
+              "default": false,
+              "form": true
+            }
+          }
         }
       }
     }
