@@ -3,10 +3,8 @@ kind: Service
 metadata:
   name: {{ include "marimo.fullname" . }}
   labels:
-    {{- include "marimo.labels" . | nindent 4 }}
-    onyxia.instance: {{ .Values.onyxia.instance.name }}
-    onyxia.project: {{ .Values.onyxiaSchema.catalog }}
-    onyxia.region: {{ .Values.onyxiaSchema.catalog }}
+    app: {{ include "marimo.name" . }}
+    release: {{ .Release.Name }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -15,4 +13,5 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "marimo.selectorLabels" . | nindent 4 }}
+    app: {{ include "marimo.name" . }}
+    release: {{ .Release.Name }}

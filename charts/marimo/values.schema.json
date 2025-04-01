@@ -1,276 +1,155 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "required": ["onyxia", "image", "service", "resources"],
-  "properties": {
-    "onyxia": {
-      "type": "object",
-      "required": ["enabled", "instance"],
-      "properties": {
-        "enabled": {
-          "type": "boolean",
-          "const": true,
-          "description": "Enable Onyxia integration"
-        },
-        "instance": {
-          "type": "object",
-          "required": ["name", "friendlyName", "description", "category", "logo", "initScript", "ports", "env", "resources", "securityContext", "serviceAccount", "annotations"],
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Instance name"
-            },
-            "friendlyName": {
-              "type": "string",
-              "description": "Friendly name for the instance"
-            },
-            "description": {
-              "type": "string",
-              "description": "Instance description"
-            },
-            "category": {
-              "type": "string",
-              "description": "Instance category"
-            },
-            "logo": {
-              "type": "string",
-              "description": "Logo URL"
-            },
-            "initScript": {
-              "type": "string",
-              "description": "Initialization script"
-            },
-            "ports": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "required": ["name", "port", "targetPort"],
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "port": {
-                    "type": "integer"
-                  },
-                  "targetPort": {
-                    "type": "integer"
-                  }
-                }
-              }
-            },
-            "env": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "required": ["name", "value"],
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            "resources": {
-              "x-onyxia": {
-                "overwriteSchemaWith": "ide/resources.json"
-              }
-            },
-            "securityContext": {
-              "type": "object",
-              "required": ["runAsNonRoot", "runAsUser", "fsGroup"],
-              "properties": {
-                "runAsNonRoot": {
-                  "type": "boolean",
-                  "const": true
-                },
-                "runAsUser": {
-                  "type": "integer"
-                },
-                "fsGroup": {
-                  "type": "integer"
-                }
-              }
-            },
-            "serviceAccount": {
-              "x-onyxia": {
-                "overwriteSchemaWith": "ide/role.json"
-              }
-            },
-            "annotations": {
-              "type": "object",
-              "required": ["onyxia.region", "onyxia.project", "onyxia.instance"],
-              "properties": {
-                "onyxia.region": {
-                  "type": "string",
-                  "const": "default"
-                },
-                "onyxia.project": {
-                  "type": "string",
-                  "const": "single-project"
-                },
-                "onyxia.instance": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "image": {
-      "type": "object",
-      "required": ["repository", "tag", "pullPolicy"],
-      "properties": {
-        "repository": {
-          "type": "string"
-        },
-        "tag": {
-          "type": "string"
-        },
-        "pullPolicy": {
-          "type": "string",
-          "enum": ["Always", "IfNotPresent", "Never"]
-        }
-      }
-    },
-    "service": {
-      "type": "object",
-      "required": ["type", "port"],
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": ["ClusterIP", "NodePort", "LoadBalancer"]
-        },
-        "port": {
-          "type": "integer"
-        }
-      }
-    },
-    "resources": {
-      "x-onyxia": {
-        "overwriteSchemaWith": "ide/resources.json"
-      }
-    },
-    "securityContext": {
-      "type": "object",
-      "required": ["runAsNonRoot", "runAsUser", "fsGroup"],
-      "properties": {
-        "runAsNonRoot": {
-          "type": "boolean",
-          "const": true
-        },
-        "runAsUser": {
-          "type": "integer"
-        },
-        "fsGroup": {
-          "type": "integer"
-        }
-      }
-    },
-    "env": {
-      "type": "array",
-      "items": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Marimo Helm Chart Values",
+    "type": "object",
+    "properties": {
+      "replicaCount": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 1,
+        "description": "Number of replicas for the Marimo service."
+      },
+      "image": {
         "type": "object",
-        "required": ["name", "value"],
         "properties": {
-          "name": {
-            "type": "string"
+          "repository": {
+            "type": "string",
+            "default": "marimo",
+            "description": "Docker image repository for Marimo."
           },
-          "value": {
-            "type": "string"
+          "tag": {
+            "type": "string",
+            "default": "latest",
+            "description": "Docker image tag."
+          },
+          "pullPolicy": {
+            "type": "string",
+            "enum": ["Always", "IfNotPresent", "Never"],
+            "default": "IfNotPresent",
+            "description": "Pull policy for the image."
           }
-        }
-      }
-    },
-    "serviceAccount": {
-      "x-onyxia": {
-        "overwriteSchemaWith": "ide/role.json"
-      }
-    },
-    "autoscaling": {
-      "type": "object",
-      "required": ["enabled", "minReplicas", "maxReplicas", "targetCPUUtilizationPercentage", "targetMemoryUtilizationPercentage", "scaleDownDelaySeconds", "scaleUpDelaySeconds"],
-      "properties": {
-        "enabled": {
-          "type": "boolean"
         },
-        "minReplicas": {
-          "type": "integer"
+        "required": ["repository", "tag"]
+      },
+      "service": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["ClusterIP", "NodePort", "LoadBalancer"],
+            "default": "ClusterIP",
+            "description": "Service type."
+          },
+          "port": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535,
+            "default": 80,
+            "description": "Port on which the service is exposed."
+          }
         },
-        "maxReplicas": {
-          "type": "integer"
-        },
-        "targetCPUUtilizationPercentage": {
-          "type": "integer"
-        },
-        "targetMemoryUtilizationPercentage": {
-          "type": "integer"
-        },
-        "scaleDownDelaySeconds": {
-          "type": "integer"
-        },
-        "scaleUpDelaySeconds": {
-          "type": "integer"
-        }
-      }
-    },
-    "onyxiaSchema": {
-      "type": "object",
-      "required": ["version", "catalog", "chart", "type", "maintainers", "keywords", "home", "sources", "dependencies"],
-      "properties": {
-        "version": {
-          "type": "string"
-        },
-        "catalog": {
-          "type": "string"
-        },
-        "chart": {
-          "type": "string"
-        },
-        "type": {
-          "type": "string",
-          "enum": ["application", "library"]
-        },
-        "maintainers": {
-          "type": "array",
-          "items": {
+        "required": ["type", "port"]
+      },
+      "ingress": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable ingress."
+          },
+          "annotations": {
             "type": "object",
-            "required": ["name", "email"],
-            "properties": {
-              "name": {
-                "type": "string"
+            "additionalProperties": { "type": "string" },
+            "description": "Annotations for the ingress resource."
+          },
+          "hosts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "host": {
+                  "type": "string",
+                  "description": "Hostname for the ingress."
+                },
+                "paths": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "default": "/",
+                        "description": "Path within the host."
+                      },
+                      "pathType": {
+                        "type": "string",
+                        "enum": ["ImplementationSpecific", "Prefix", "Exact"],
+                        "default": "ImplementationSpecific",
+                        "description": "Path matching behavior."
+                      }
+                    },
+                    "required": ["path", "pathType"]
+                  }
+                }
               },
-              "email": {
-                "type": "string"
-              }
+              "required": ["host", "paths"]
+            }
+          },
+          "tls": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "hosts": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "description": "TLS hosts."
+                },
+                "secretName": {
+                  "type": "string",
+                  "description": "Name of the secret containing TLS certificate."
+                }
+              },
+              "required": ["hosts", "secretName"]
             }
           }
-        },
-        "keywords": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "home": {
-          "type": "string"
-        },
-        "sources": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "dependencies": {
-          "type": "array",
-          "items": {
-            "type": "object"
+        }
+      },
+      "resources": {
+        "type": "object",
+        "properties": {
+          "limits": {
+            "type": "object",
+            "properties": {
+              "cpu": { "type": "string", "description": "CPU limit." },
+              "memory": { "type": "string", "description": "Memory limit." }
+            }
+          },
+          "requests": {
+            "type": "object",
+            "properties": {
+              "cpu": { "type": "string", "description": "CPU request." },
+              "memory": { "type": "string", "description": "Memory request." }
+            }
           }
         }
+      },
+      "nodeSelector": {
+        "type": "object",
+        "additionalProperties": { "type": "string" },
+        "description": "Node selector for pod scheduling."
+      },
+      "tolerations": {
+        "type": "array",
+        "items": { "type": "object" },
+        "description": "Tolerations for scheduling onto tainted nodes."
+      },
+      "affinity": {
+        "type": "object",
+        "description": "Pod affinity and anti-affinity rules."
       }
-    }
+    },
+    "required": ["replicaCount", "image", "service"]
   }
-} 
+  

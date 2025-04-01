@@ -1,135 +1,21 @@
-# Onyxia specific configurations
-onyxia:
-  enabled: true
-  instance:
-    name: marimo
-    friendlyName: Marimo Notebook
-    description: Interactive Python notebooks with Marimo
-    category: Development
-    logo: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/logo.png
-    initScript: |
-      pip install marimo
-      marimo init my_notebook.py
-    ports:
-      - name: http
-        port: 8000
-        targetPort: 8000
-    env:
-      - name: MARIMO_SERVER_HOST
-        value: "0.0.0.0"
-      - name: MARIMO_SERVER_PORT
-        value: "8000"
-      - name: PYTHONPATH
-        value: "/home/marimo"
-      - name: HOME
-        value: "/home/marimo"
-      - name: ONYXIA_INSTANCE_NAME
-        value: "marimo"
-      - name: ONYXIA_PROJECT
-        value: "single-project"
-      - name: ONYXIA_REGION
-        value: "default"
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "1Gi"
-      limits:
-        cpu: "2000m"
-        memory: "4Gi"
-    securityContext:
-      runAsNonRoot: true
-      runAsUser: 1000
-      fsGroup: 1000
-    serviceAccount:
-      enabled: true
-      role: "view"
-    annotations:
-      onyxia.region: default
-      onyxia.project: single-project
-      onyxia.instance: marimo
-
-# Chart specific configurations
+replicaCount: 1
 image:
-  repository: ghcr.io/marimo-team/marimo
-  tag: "latest"
+  repository: marimo
+  tag: latest
   pullPolicy: IfNotPresent
-
-# Service configuration
 service:
   type: ClusterIP
-  port: 8000
-
-# Ingress configuration
+  port: 80
 ingress:
-  enabled: true
-  className: nginx
-  annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-
-# Resource configuration
-resources:
-  requests:
-    cpu: "100m"
-    memory: "1Gi"
-  limits:
-    cpu: "2000m"
-    memory: "4Gi"
-
-# Security context
-securityContext:
-  runAsNonRoot: true
-  runAsUser: 1000
-  fsGroup: 1000
-
-# Environment variables
-env:
-  - name: MARIMO_SERVER_HOST
-    value: "0.0.0.0"
-  - name: MARIMO_SERVER_PORT
-    value: "8000"
-  - name: PYTHONPATH
-    value: "/home/marimo"
-  - name: HOME
-    value: "/home/marimo"
-  - name: ONYXIA_INSTANCE_NAME
-    value: "marimo"
-  - name: ONYXIA_PROJECT
-    value: "single-project"
-  - name: ONYXIA_REGION
-    value: "default"
-
-# ServiceAccount configuration
-serviceAccount:
-  enabled: true
-  role: "view"
-
-# Autoscaling configuration
-autoscaling:
   enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  targetMemoryUtilizationPercentage: 80
-  scaleDownDelaySeconds: 300
-  scaleUpDelaySeconds: 0
-
-# Onyxia schema specific fields
-onyxiaSchema:
-  version: "0.1.0"
-  catalog: "vibe-coding"
-  chart: "marimo"
-  type: "application"
-  maintainers:
-    - name: "DataDrivet"
-      email: "support@datadrivet.ai"
-  keywords:
-    - "marimo"
-    - "notebook"
-    - "python"
-    - "development"
-  home: "https://github.com/marimo-team/marimo"
-  sources:
-    - "https://github.com/marimo-team/marimo"
-  dependencies: []
+  annotations: {}
+  hosts:
+    - host: marimo.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
