@@ -3,13 +3,13 @@ entries:
   marimo:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-04-01T09:55:51.215089733Z"
+    created: "2025-04-01T10:04:33.070055351Z"
     description: A Helm chart for Kubernetes
-    digest: 394d2d78bbc07a2d61ac9d91631d7dc544dd6e8c8dcd230527f53b348923afa4
+    digest: d2dd5c5c243dbb3ddc331da96b2e923ad904b23a9040769304b5a14c28f722ed
     icon: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/logo.png
     name: marimo
     type: application
     urls:
     - https://jimmyflatting.github.io/helm-charts/marimo-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-01T09:55:51.214413588Z"
+generated: "2025-04-01T10:04:33.069363887Z"
