@@ -1,7 +1,3 @@
-image:
-  repository: ghcr.io/marimo-team/marimo
-  tag: "latest"
-
 # Onyxia specific configurations
 onyxia:
   enabled: true
@@ -38,6 +34,11 @@ onyxia:
       create: true
       name: ""
       annotations: {}
+
+# Chart specific configurations
+image:
+  repository: ghcr.io/marimo-team/marimo
+  tag: "latest"
 
 # Service configuration
 service:
@@ -90,3 +91,22 @@ autoscaling:
   targetMemoryUtilizationPercentage: 80
   scaleDownDelaySeconds: 300
   scaleUpDelaySeconds: 0
+
+# Onyxia schema specific fields
+onyxiaSchema:
+  version: "0.1.0"
+  catalog: "vibe-coding"
+  chart: "marimo"
+  type: "application"
+  maintainers:
+    - name: "DataDrivet"
+      email: "support@datadrivet.ai"
+  keywords:
+    - "marimo"
+    - "notebook"
+    - "python"
+    - "development"
+  home: "https://github.com/marimo-team/marimo"
+  sources:
+    - "https://github.com/marimo-team/marimo"
+  dependencies: []
