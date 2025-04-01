@@ -1,0 +1,49 @@
+name: Deploy Helm Charts
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.12.0
+
+      - name: Lint Helm
+        run: |
+          helm lint charts/marimo --values charts/marimo/values.yaml
+          helm template charts/marimo --values charts/marimo/values.yaml
+
+      - name: Package charts
+        run: |
+          mkdir -p packaged-charts
+          for chart in charts/*; do
+            if [ -d "$chart" ]; then
+              helm package "$chart" -d packaged-charts
+            fi
+          done
+
+      - name: Generate index.yaml
+        run: |
+          helm repo index packaged-charts --url https://jimmyflatting.github.io/helm-charts
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./packaged-charts
+          publish_branch: gh-pages
+          commit_message: "Deploy Helm charts to GitHub Pages" 
