@@ -3,11 +3,11 @@ entries:
   marimo:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-01T13:09:32.237912448Z"
+    created: "2025-04-01T13:20:59.889508896Z"
     description: A Helm chart for deploying Marimo notebooks
-    digest: 46be5a6a58c07e508bf44ceb23b640ede28c3dc96dc554304abe401b6a896b39
+    digest: 8289717e88822db578f5c6a061a7afcdbd2cd76ec5fcf6f0359898a75d759fd3
     name: marimo
     urls:
     - https://jimmyflatting.github.io/helm-charts/marimo-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-01T13:09:32.237418579Z"
+generated: "2025-04-01T13:20:59.88896518Z"
