@@ -1,10 +1,12 @@
 {
   "$schema": "http://json-schema.org/schema#",
   "type": "object",
+  "required": ["service", "resources", "persistence"],
   "properties": {
     "service": {
       "type": "object",
       "title": "Service Configuration",
+      "required": ["port"],
       "properties": {
         "port": {
           "type": "integer",
@@ -46,6 +48,7 @@
         "host": {
           "type": "string",
           "title": "Host",
+          "description": "Host for the IngressRoute (will be set by Onyxia)",
           "form": true
         },
         "path": {
@@ -66,6 +69,7 @@
             "secretName": {
               "type": "string",
               "title": "TLS Secret Name",
+              "description": "Name of the TLS secret (will be set by Onyxia)",
               "form": true
             },
             "certResolver": {
@@ -106,9 +110,11 @@
     "resources": {
       "type": "object",
       "title": "Resources",
+      "required": ["requests", "limits"],
       "properties": {
         "requests": {
           "type": "object",
+          "required": ["cpu", "memory"],
           "properties": {
             "cpu": {
               "type": "string",
@@ -126,6 +132,7 @@
         },
         "limits": {
           "type": "object",
+          "required": ["cpu", "memory"],
           "properties": {
             "cpu": {
               "type": "string",
@@ -146,6 +153,7 @@
     "persistence": {
       "type": "object",
       "title": "Persistence",
+      "required": ["enabled", "size"],
       "properties": {
         "enabled": {
           "type": "boolean",
@@ -172,7 +180,7 @@
             "enabled": {
               "type": "boolean",
               "title": "Enable S3 Integration",
-              "default": true,
+              "default": false,
               "form": true
             }
           }
@@ -184,7 +192,7 @@
             "enabled": {
               "type": "boolean",
               "title": "Enable OIDC Authentication",
-              "default": true,
+              "default": false,
               "form": true
             }
           }

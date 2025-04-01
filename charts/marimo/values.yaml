@@ -42,18 +42,9 @@ service:
 ingress:
   enabled: false  # Disable standard ingress since we'll use Traefik IngressRoute
   className: "nginx" 
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: marimo.platform.datadrivet.ai
-      paths:
-        - path: /
-          pathType: Prefix
-  tls:
-    - secretName: marimo-tls
-      hosts:
-        - marimo.platform.datadrivet.ai
+  annotations: {}
+  hosts: []
+  tls: []
   # Add cert-manager configuration
   certManager:
     clusterIssuer: "letsencrypt-prod"
@@ -62,12 +53,11 @@ ingress:
 ingressRoute:
   enabled: true
   annotations: {}
-  host: marimo.platform.datadrivet.ai
+  host: ""  # Will be set by Onyxia
   path: /
   tls:
     enabled: true
-    secretName: marimo-tls
-    # Add cert resolver configuration for Traefik
+    secretName: ""  # Will be set by Onyxia
     certResolver: "le"
     clusterIssuer: "letsencrypt-prod"
 
