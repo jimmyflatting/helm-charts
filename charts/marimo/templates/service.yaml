@@ -5,6 +5,11 @@ metadata:
   labels:
     app: {{ include "marimo.name" . }}
     release: {{ .Release.Name }}
+    onyxia/service: "true"
+  annotations:
+    onyxia/service: "true"
+    onyxia/service-port: "8080"
+    onyxia/service-type: "http"
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -15,3 +20,4 @@ spec:
   selector:
     app: {{ include "marimo.name" . }}
     release: {{ .Release.Name }}
+    onyxia/service: "true"

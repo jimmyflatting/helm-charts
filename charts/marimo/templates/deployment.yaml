@@ -9,6 +9,7 @@ metadata:
   annotations:
     debug-image-repo: {{ .Values.image.repository }}
     debug-image-tag: {{ .Values.image.tag }}
+    onyxia/service: "true"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -21,6 +22,10 @@ spec:
         app: {{ include "marimo.name" . }}
         release: {{ .Release.Name }}
         onyxia/service: "true"
+      annotations:
+        onyxia/service: "true"
+        onyxia/service-port: "8080"
+        onyxia/service-type: "http"
     spec:
       containers:
         - name: {{ .Chart.Name }}
