@@ -32,7 +32,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
             - "/bin/sh"
@@ -40,11 +40,13 @@ spec:
             - "marimo server --port ${MARIMO_PORT} --host 0.0.0.0 --allow-origins ${MARIMO_ALLOW_ORIGINS}"
           ports:
             - name: http
-              containerPort: {{ .Values.service.targetPort }}
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
-          envFrom:
-            - configMapRef:
-                name: {{ include "marimo.fullname" . }}-configmap
+          env:
+            - name: MARIMO_PORT
+              value: "{{ .Values.environment.MARIMO_PORT }}"
+            - name: MARIMO_ALLOW_ORIGINS
+              value: "{{ .Values.environment.MARIMO_ALLOW_ORIGINS }}"
           {{- if or .Values.onyxia.s3.enabled .Values.onyxia.auth.enabled }}
             - secretRef:
                 name: {{ include "marimo.fullname" . }}-secret
@@ -85,11 +87,6 @@ spec:
       {{- if .Values.persistence.enabled }}
       volumes:
         - name: marimo-data
-          {{- if .Values.persistence.existingClaim }}
-          persistentVolumeClaim:
-            claimName: {{ .Values.persistence.existingClaim }}
-          {{- else }}
           persistentVolumeClaim:
             claimName: {{ include "marimo.fullname" . }}-pvc
-          {{- end }}
       {{- end }}

@@ -1,65 +1,12 @@
-# Default values for Marimo
-# This is a YAML-formatted file.
-
+# Minimal configuration for Marimo
 replicaCount: 1
 
 image:
   repository: ghcr.io/marimo-team/marimo
-  pullPolicy: IfNotPresent
   tag: "latest"
 
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
-
-podAnnotations: {}
-
-podSecurityContext: {}
-  # fsGroup: 2000
-
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
 service:
-  type: ClusterIP
   port: 8080
-  targetPort: 8080
-
-ingress:
-  enabled: false  # Disable standard ingress since we'll use Traefik IngressRoute
-  className: "nginx" 
-  annotations: {}
-  hosts: []
-  tls: []
-  # Add cert-manager configuration
-  certManager:
-    clusterIssuer: "letsencrypt-prod"
-
-# Add Traefik IngressRoute configuration
-ingressRoute:
-  enabled: true
-  annotations: {}
-  host: ""  # Will be set by Onyxia
-  path: /
-  tls:
-    enabled: true
-    secretName: ""  # Will be set by Onyxia
-    certResolver: "le"
-    clusterIssuer: "letsencrypt-prod"
 
 resources:
   limits:
@@ -69,48 +16,12 @@ resources:
     cpu: 500m
     memory: 1Gi
 
-# Environment variables for Marimo
-environment:
-  # Default port for Marimo server
-  MARIMO_PORT: 8080
-  # Allow sharing from any IP
-  MARIMO_ALLOW_ORIGINS: "*"
-  # Use http by default (change to https if using TLS termination)
-  MARIMO_SERVER_URL_SCHEME: "http"
-
-# Storage configuration
 persistence:
   enabled: true
-  # Use existing claim
-  existingClaim: ""
-  # or create a new one with these settings
-  storageClass: ""
-  accessMode: ReadWriteOnce
   size: 10Gi
-  annotations: {}
-  # Mount path inside the container
   mountPath: /home/marimo/notebooks
 
-# Onyxia specific settings
-onyxia:
-  # S3 configuration for Onyxia integration
-  s3:
-    enabled: false
-    endpoint: ""
-    region: ""
-    accessKeyId: ""
-    secretAccessKey: ""
-    defaultBucket: ""
-  
-  # Authentication settings
-  auth:
-    enabled: false
-    oidcIssuer: ""
-    oidcClientId: ""
-    oidcRedirectUri: ""
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
+# Basic environment variables
+environment:
+  MARIMO_PORT: 8080
+  MARIMO_ALLOW_ORIGINS: "*"
