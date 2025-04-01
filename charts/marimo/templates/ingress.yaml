@@ -5,26 +5,27 @@ metadata:
   name: {{ include "marimo.fullname" . }}
   labels:
     onyxia/service: "true"
+    onyxia/type: "service"
   annotations:
     {{- toYaml .Values.ingress.annotations | nindent 4 }}
     onyxia/service: "true"
     onyxia/service-type: "http"
+    onyxia/service-port: "8080"
+    onyxia/type: "service"
+    onyxia/random-subdomain: "true"
 spec:
+  ingressClassName: nginx
   rules:
-    {{- range .Values.ingress.hosts }}
-    - host: {{ .host }}
+    - host: marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}
       http:
         paths:
-          {{- range .paths }}
-          - path: {{ .path }}
-            pathType: {{ .pathType }}
+          - path: /
+            pathType: Prefix
             backend:
               service:
-                name: {{ include "marimo.fullname" $ }}
+                name: {{ include "marimo.fullname" . }}
                 port:
-                  number: {{ $.Values.service.port }}
-          {{- end }}
-    {{- end }}
+                  number: {{ .Values.service.port }}
   {{- if .Values.ingress.tls }}
   tls:
     {{- range .Values.ingress.tls }}
