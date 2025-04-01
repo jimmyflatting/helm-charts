@@ -4,6 +4,8 @@ metadata:
   name: {{ include "marimo.fullname" . }}
   labels:
     {{- include "marimo.labels" . | nindent 4 }}
+    onyxia.instance: {{ .Values.onyxia.instance.name }}
+    onyxia.project: {{ .Values.onyxiaSchema.catalog }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -17,11 +19,17 @@ spec:
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      onyxia.instance: {{ .Values.onyxia.instance.name }}
+      onyxia.project: {{ .Values.onyxiaSchema.catalog }}
+      onyxia.region: {{ .Values.onyxiaSchema.catalog }}
       labels:
         {{- include "marimo.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
+        onyxia.instance: {{ .Values.onyxia.instance.name }}
+        onyxia.project: {{ .Values.onyxiaSchema.catalog }}
+        onyxia.region: {{ .Values.onyxiaSchema.catalog }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

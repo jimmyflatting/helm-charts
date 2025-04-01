@@ -9,7 +9,8 @@
       "properties": {
         "enabled": {
           "type": "boolean",
-          "default": true
+          "const": true,
+          "description": "This value must always be true for Onyxia integration"
         },
         "instance": {
           "type": "object",
@@ -77,36 +78,8 @@
             },
             "resources": {
               "type": "object",
-              "required": ["requests", "limits"],
-              "properties": {
-                "requests": {
-                  "type": "object",
-                  "required": ["cpu", "memory"],
-                  "properties": {
-                    "cpu": {
-                      "type": "string",
-                      "default": "500m"
-                    },
-                    "memory": {
-                      "type": "string",
-                      "default": "1Gi"
-                    }
-                  }
-                },
-                "limits": {
-                  "type": "object",
-                  "required": ["cpu", "memory"],
-                  "properties": {
-                    "cpu": {
-                      "type": "string",
-                      "default": "2"
-                    },
-                    "memory": {
-                      "type": "string",
-                      "default": "4Gi"
-                    }
-                  }
-                }
+              "x-onyxia": {
+                "overwriteSchemaWith": "ide/resources.json"
               }
             },
             "securityContext": {
@@ -114,7 +87,8 @@
               "properties": {
                 "runAsNonRoot": {
                   "type": "boolean",
-                  "default": true
+                  "const": true,
+                  "description": "This value must always be true for security"
                 },
                 "runAsUser": {
                   "type": "integer",
@@ -128,19 +102,8 @@
             },
             "serviceAccount": {
               "type": "object",
-              "properties": {
-                "create": {
-                  "type": "boolean",
-                  "default": true
-                },
-                "name": {
-                  "type": "string",
-                  "default": ""
-                },
-                "annotations": {
-                  "type": "object",
-                  "default": {}
-                }
+              "x-onyxia": {
+                "overwriteSchemaWith": "ide/role.json"
               }
             }
           }
@@ -198,36 +161,8 @@
     },
     "resources": {
       "type": "object",
-      "required": ["requests", "limits"],
-      "properties": {
-        "requests": {
-          "type": "object",
-          "required": ["cpu", "memory"],
-          "properties": {
-            "cpu": {
-              "type": "string",
-              "default": "500m"
-            },
-            "memory": {
-              "type": "string",
-              "default": "1Gi"
-            }
-          }
-        },
-        "limits": {
-          "type": "object",
-          "required": ["cpu", "memory"],
-          "properties": {
-            "cpu": {
-              "type": "string",
-              "default": "2"
-            },
-            "memory": {
-              "type": "string",
-              "default": "4Gi"
-            }
-          }
-        }
+      "x-onyxia": {
+        "overwriteSchemaWith": "ide/resources.json"
       }
     },
     "securityContext": {
@@ -235,7 +170,8 @@
       "properties": {
         "runAsNonRoot": {
           "type": "boolean",
-          "default": true
+          "const": true,
+          "description": "This value must always be true for security"
         },
         "runAsUser": {
           "type": "integer",
@@ -264,19 +200,8 @@
     },
     "serviceAccount": {
       "type": "object",
-      "properties": {
-        "create": {
-          "type": "boolean",
-          "default": true
-        },
-        "name": {
-          "type": "string",
-          "default": ""
-        },
-        "annotations": {
-          "type": "object",
-          "default": {}
-        }
+      "x-onyxia": {
+        "overwriteSchemaWith": "ide/role.json"
       }
     },
     "autoscaling": {

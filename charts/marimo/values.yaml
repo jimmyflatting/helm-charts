@@ -21,19 +21,18 @@ onyxia:
         value: "8000"
     resources:
       requests:
-        cpu: "500m"
-        memory: "1Gi"
+        cpu: "100m"
+        memory: "2Gi"
       limits:
-        cpu: "2"
-        memory: "4Gi"
+        cpu: "5000m"
+        memory: "50Gi"
     securityContext:
       runAsNonRoot: true
       runAsUser: 1000
       fsGroup: 1000
     serviceAccount:
-      create: true
-      name: ""
-      annotations: {}
+      enabled: true
+      role: "view"
 
 # Chart specific configurations
 image:
@@ -57,11 +56,11 @@ ingress:
 # Resource configuration
 resources:
   requests:
-    cpu: "500m"
-    memory: "1Gi"
+    cpu: "100m"
+    memory: "2Gi"
   limits:
-    cpu: "2"
-    memory: "4Gi"
+    cpu: "5000m"
+    memory: "50Gi"
 
 # Security context
 securityContext:
@@ -78,9 +77,8 @@ env:
 
 # ServiceAccount configuration
 serviceAccount:
-  create: true
-  name: ""
-  annotations: {}
+  enabled: true
+  role: "view"
 
 # Autoscaling configuration
 autoscaling:
