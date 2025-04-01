@@ -13,8 +13,10 @@ metadata:
     onyxia/service-port: "8080"
     onyxia/type: "service"
     onyxia/random-subdomain: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.tls: "false"
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   rules:
     - host: marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}
       http:
