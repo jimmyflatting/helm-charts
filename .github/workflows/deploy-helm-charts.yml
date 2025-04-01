@@ -46,4 +46,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./packaged-charts
           publish_branch: gh-pages
-          commit_message: "Deploy Helm charts to GitHub Pages" 
+          commit_message: "Deploy Helm charts to GitHub Pages"
