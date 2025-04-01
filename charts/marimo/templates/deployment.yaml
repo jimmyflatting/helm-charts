@@ -48,18 +48,10 @@ spec:
               value: "8080"
             - name: MARIMO_HOST
               value: "0.0.0.0"
-            - name: ONYXIA_SERVICE_PORT
-              value: "8080"
-            - name: ONYXIA_SERVICE_TYPE
-              value: "http"
-            - name: ONYXIA_RANDOM_SUBDOMAIN
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.annotations['onyxia/random-subdomain']
-            - name: ONYXIA_DOMAIN
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.annotations['onyxia/domain']
+            {{- range $key, $value := .Values.onyxia.environment }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
           startupProbe:
             httpGet:
               path: /

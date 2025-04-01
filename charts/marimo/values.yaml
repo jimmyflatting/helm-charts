@@ -9,10 +9,12 @@ service:
 ingress:
   enabled: true
   annotations:
-    traefik.ingress.kubernetes.io/router.rule: "Host(`marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}`)"
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
     traefik.ingress.kubernetes.io/router.middlewares: default-stripprefix@kubernetescrd
+    traefik.ingress.kubernetes.io/service.serversscheme: http
+    traefik.ingress.kubernetes.io/service.passhostheader: "true"
+    traefik.ingress.kubernetes.io/router.rule: "Host(`marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}`)"
   tls: []
 resources:
   limits:
@@ -28,3 +30,10 @@ onyxia:
   friendlyName: "Marimo"
   service:
     port: 8080
+  randomSubdomain: ${ONYXIA_RANDOM_SUBDOMAIN}
+  domain: ${ONYXIA_DOMAIN}
+  environment:
+    ONYXIA_SERVICE_PORT: "8080"
+    ONYXIA_SERVICE_TYPE: "http"
+    ONYXIA_RANDOM_SUBDOMAIN: ${ONYXIA_RANDOM_SUBDOMAIN}
+    ONYXIA_DOMAIN: ${ONYXIA_DOMAIN}
