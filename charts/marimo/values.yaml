@@ -1,52 +1,52 @@
-# Minimal configuration for Marimo
-replicaCount: 1
-
 image:
   repository: ghcr.io/marimo-team/marimo
   tag: "latest"
 
-service:
-  port: 8080
-
-serviceAccount:
-  create: true
-  name: ""
-
-ingressRoute:
+# Onyxia specific configurations
+onyxia:
   enabled: true
-  host: ""  # Will be set by Onyxia
-  path: "/"
-  tls:
-    enabled: true
-    secretName: ""  # Will be set by Onyxia
-    certResolver: "le"
-    clusterIssuer: "letsencrypt-prod"
+  instance:
+    name: marimo
+    friendlyName: Marimo Notebook
+    description: Interactive Python notebooks with Marimo
+    category: Development
+    logo: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/logo.png
+    initScript: |
+      pip install marimo
+      marimo init my_notebook.py
 
+# Service configuration
+service:
+  type: ClusterIP
+  port: 8000
+
+# Ingress configuration
 ingress:
-  certManager:
-    clusterIssuer: "letsencrypt-prod"
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
 
+# Resource configuration
 resources:
-  limits:
-    cpu: 1000m
-    memory: 2Gi
   requests:
     cpu: 500m
     memory: 1Gi
+  limits:
+    cpu: 2
+    memory: 4Gi
 
-persistence:
-  enabled: true
-  size: 10Gi
-  mountPath: /home/marimo/notebooks
+# Security context
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
 
-# Basic environment variables
-environment:
-  MARIMO_PORT: 8080
-  MARIMO_ALLOW_ORIGINS: "*"
-
-# Onyxia integration
-onyxia:
-  s3:
-    enabled: false
-  auth:
-    enabled: false
+# Environment variables
+env:
+  - name: MARIMO_SERVER_HOST
+    value: "0.0.0.0"
+  - name: MARIMO_SERVER_PORT
+    value: "8000"

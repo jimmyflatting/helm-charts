@@ -4,10 +4,10 @@ metadata:
   name: {{ include "marimo.fullname" . }}
   labels:
     {{- include "marimo.labels" . | nindent 4 }}
-  annotations:
-    "helm.sh/hook-weight": "5"  # Higher number means later execution
 spec:
+  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "marimo.selectorLabels" . | nindent 6 }}
@@ -18,60 +18,58 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "marimo.selectorLabels" . | nindent 8 }}
+        {{- include "marimo.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "marimo.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      # Remove problematic init container - the service account will be guaranteed to exist
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
+          {{- with .Values.securityContext }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command:
-            - "/bin/sh"
-            - "-c"
-            - "marimo server --port ${MARIMO_PORT} --host 0.0.0.0 --allow-origins ${MARIMO_ALLOW_ORIGINS}"
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          {{- with .Values.env }}
           env:
-            - name: MARIMO_PORT
-              value: "{{ .Values.environment.MARIMO_PORT }}"
-            - name: MARIMO_ALLOW_ORIGINS
-              value: "{{ .Values.environment.MARIMO_ALLOW_ORIGINS }}"
-          {{- if or .Values.onyxia.s3.enabled .Values.onyxia.auth.enabled }}
-            - secretRef:
-                name: {{ include "marimo.fullname" . }}-secret
+            {{- toYaml . | nindent 12 }}
           {{- end }}
+          command: ["marimo"]
+          args: ["run", "--server-host", "0.0.0.0", "--server-port", "8000", "/home/jovyan/my_notebook.py"]
+          {{- with .Values.livenessProbe }}
           livenessProbe:
-            httpGet:
-              path: /api/status
-              port: http
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            failureThreshold: 5
-          readinessProbe:
-            httpGet:
-              path: /api/status
-              port: http
-            initialDelaySeconds: 10
-            periodSeconds: 5
-            failureThreshold: 3
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          {{- if .Values.persistence.enabled }}
-          volumeMounts:
-            - name: marimo-data
-              mountPath: {{ .Values.persistence.mountPath }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -83,10 +81,4 @@ spec:
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- if .Values.persistence.enabled }}
-      volumes:
-        - name: marimo-data
-          persistentVolumeClaim:
-            claimName: {{ include "marimo.fullname" . }}-pvc
       {{- end }}
