@@ -26,6 +26,7 @@ jobs:
         run: |
           helm dependency update charts/library-chart
           helm dependency update charts/vscode-python
+          helm dependency update charts/marimo
       
       - name: Lint Helm
         run: |
