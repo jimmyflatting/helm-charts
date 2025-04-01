@@ -52,3 +52,7 @@ onyxia:
     ONYXIA_URL: "https://marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}"
     ONYXIA_RANDOM_SUBDOMAIN: "${ONYXIA_RANDOM_SUBDOMAIN}"
     ONYXIA_DOMAIN: "${ONYXIA_DOMAIN}"
+
+kubernetes:
+  enabled: true
+  role: "view"
