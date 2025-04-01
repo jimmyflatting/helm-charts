@@ -4,12 +4,15 @@ metadata:
   name: {{ include "marimo.fullname" . }}
   labels:
     app: {{ include "marimo.name" . }}
+    chart: {{ include "marimo.chart" . }}
     release: {{ .Release.Name }}
     onyxia/service: "true"
+    onyxia/type: "service"
   annotations:
     onyxia/service: "true"
-    onyxia/service-port: "8080"
     onyxia/service-type: "http"
+    onyxia/service-port: "{{ .Values.service.port }}"
+    onyxia/type: "service"
 spec:
   type: {{ .Values.service.type }}
   ports:
