@@ -9,9 +9,9 @@ entries:
       onyxia.sh/version: 0.1.0
     apiVersion: v2
     appVersion: latest
-    created: "2025-04-01T08:58:14.052075862Z"
+    created: "2025-04-01T09:02:18.143550993Z"
     description: A Helm chart for Marimo interactive Python notebooks in Onyxia Datalabs
-    digest: dd3e4369aea48fffc4db077be9c0c68ef964d4e49c33371a29cf2120424b9d5c
+    digest: 01a5d4c4f90860d9208729cd313b6268b65c9a785a18397637f2d21c69143766
     home: https://github.com/marimo-team/marimo
     icon: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/public/android-chrome-512x512.png
     keywords:
@@ -30,4 +30,4 @@ entries:
     urls:
     - https://jimmyflatting.github.io/helm-charts/marimo-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-01T08:58:14.051318552Z"
+generated: "2025-04-01T09:02:18.142846857Z"
