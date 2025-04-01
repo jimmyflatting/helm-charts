@@ -14,6 +14,30 @@ onyxia:
     initScript: |
       pip install marimo
       marimo init my_notebook.py
+    ports:
+      - name: http
+        port: 8000
+        targetPort: 8000
+    env:
+      - name: MARIMO_SERVER_HOST
+        value: "0.0.0.0"
+      - name: MARIMO_SERVER_PORT
+        value: "8000"
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1Gi
+      limits:
+        cpu: 2
+        memory: 4Gi
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      fsGroup: 1000
+    serviceAccount:
+      create: true
+      name: ""
+      annotations: {}
 
 # Service configuration
 service:
