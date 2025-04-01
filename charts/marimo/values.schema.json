@@ -7,7 +7,11 @@
         "type": "integer",
         "minimum": 1,
         "default": 1,
-        "description": "Number of replicas for the Marimo service."
+        "description": "Number of replicas for the Marimo service.",
+        "helmValuesSchema": {
+          "type": "integer",
+          "description": "Number of replicas for the Marimo service."
+        }
       },
       "image": {
         "type": "object",
@@ -15,18 +19,31 @@
           "repository": {
             "type": "string",
             "default": "marimo",
-            "description": "Docker image repository for Marimo."
+            "description": "Docker image repository for Marimo.",
+            "helmValuesSchema": {
+              "type": "string",
+              "description": "Docker image repository for Marimo."
+            }
           },
           "tag": {
             "type": "string",
             "default": "latest",
-            "description": "Docker image tag."
+            "description": "Docker image tag.",
+            "helmValuesSchema": {
+              "type": "string",
+              "description": "Docker image tag."
+            }
           },
           "pullPolicy": {
             "type": "string",
             "enum": ["Always", "IfNotPresent", "Never"],
             "default": "IfNotPresent",
-            "description": "Pull policy for the image."
+            "description": "Pull policy for the image.",
+            "helmValuesSchema": {
+              "type": "string",
+              "enum": ["Always", "IfNotPresent", "Never"],
+              "description": "Pull policy for the image."
+            }
           }
         },
         "required": ["repository", "tag"]
@@ -38,14 +55,25 @@
             "type": "string",
             "enum": ["ClusterIP", "NodePort", "LoadBalancer"],
             "default": "ClusterIP",
-            "description": "Service type."
+            "description": "Service type.",
+            "helmValuesSchema": {
+              "type": "string",
+              "enum": ["ClusterIP", "NodePort", "LoadBalancer"],
+              "description": "Service type."
+            }
           },
           "port": {
             "type": "integer",
             "minimum": 1,
             "maximum": 65535,
             "default": 80,
-            "description": "Port on which the service is exposed."
+            "description": "Port on which the service is exposed.",
+            "helmValuesSchema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535,
+              "description": "Port on which the service is exposed."
+            }
           }
         },
         "required": ["type", "port"]
@@ -122,15 +150,43 @@
           "limits": {
             "type": "object",
             "properties": {
-              "cpu": { "type": "string", "description": "CPU limit." },
-              "memory": { "type": "string", "description": "Memory limit." }
+              "cpu": {
+                "type": "string",
+                "description": "CPU limit.",
+                "helmValuesSchema": {
+                  "type": "string",
+                  "description": "CPU limit (e.g. '500m', '1')."
+                }
+              },
+              "memory": {
+                "type": "string",
+                "description": "Memory limit.",
+                "helmValuesSchema": {
+                  "type": "string",
+                  "description": "Memory limit (e.g. '512Mi', '1Gi')."
+                }
+              }
             }
           },
           "requests": {
             "type": "object",
             "properties": {
-              "cpu": { "type": "string", "description": "CPU request." },
-              "memory": { "type": "string", "description": "Memory request." }
+              "cpu": {
+                "type": "string",
+                "description": "CPU request.",
+                "helmValuesSchema": {
+                  "type": "string",
+                  "description": "CPU request (e.g. '250m', '500m')."
+                }
+              },
+              "memory": {
+                "type": "string",
+                "description": "Memory request.",
+                "helmValuesSchema": {
+                  "type": "string",
+                  "description": "Memory request (e.g. '256Mi', '512Mi')."
+                }
+              }
             }
           }
         }
