@@ -37,3 +37,9 @@ onyxia:
     ONYXIA_SERVICE_TYPE: "http"
     ONYXIA_RANDOM_SUBDOMAIN: ${ONYXIA_RANDOM_SUBDOMAIN}
     ONYXIA_DOMAIN: ${ONYXIA_DOMAIN}
+  popup:
+    enabled: true
+    title: "Marimo"
+    description: "Marimo is a reactive Python notebook that's designed to be used both as an interactive development environment and as a data app framework."
+    url: "https://marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}"
+    icon: "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg"

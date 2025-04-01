@@ -15,6 +15,11 @@ metadata:
     onyxia/service-type: "http"
     onyxia/service-port: "8080"
     onyxia/type: "service"
+    onyxia/popup: "true"
+    onyxia/popup-title: "Marimo"
+    onyxia/popup-description: "Marimo is a reactive Python notebook that's designed to be used both as an interactive development environment and as a data app framework."
+    onyxia/popup-url: "https://marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}"
+    onyxia/popup-icon: "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -34,6 +39,11 @@ spec:
         onyxia/service-port: "8080"
         onyxia/service-type: "http"
         onyxia/type: "service"
+        onyxia/popup: "true"
+        onyxia/popup-title: "Marimo"
+        onyxia/popup-description: "Marimo is a reactive Python notebook that's designed to be used both as an interactive development environment and as a data app framework."
+        onyxia/popup-url: "https://marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}"
+        onyxia/popup-icon: "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg"
     spec:
       containers:
         - name: {{ .Chart.Name }}
