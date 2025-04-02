@@ -550,6 +550,46 @@
             }
           }
         }
+      },
+      "repository": {
+        "type": "object",
+        "properties": {
+          "configMapName": {
+            "type": "string",
+            "default": "",
+            "description": "ConfigMap name for repository configuration."
+          },
+          "pipRepository": {
+            "type": "string",
+            "default": "",
+            "description": "Custom pip repository URL."
+          },
+          "condaRepository": {
+            "type": "string",
+            "default": "",
+            "description": "Custom conda repository URL."
+          },
+          "mavenRepository": {
+            "type": "string",
+            "default": "",
+            "description": "Custom maven repository URL."
+          }
+        }
+      },
+      "userPreferences": {
+        "type": "object",
+        "properties": {
+          "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode by default."
+          },
+          "language": {
+            "type": "string",
+            "default": "en",
+            "description": "Default language for the UI."
+          }
+        }
       }
     }
   }

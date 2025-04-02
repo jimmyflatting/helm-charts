@@ -60,3 +60,36 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Get a value from a dictionary with default if it doesn't exist
+*/}}
+{{- define "marimo.getSafeValue" -}}
+{{- $root := index . 0 -}}
+{{- $key := index . 1 -}}
+{{- $default := index . 2 -}}
+{{- if hasKey $root $key -}}
+{{- index $root $key -}}
+{{- else -}}
+{{- $default -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Get a nested value safely, with default
+*/}}
+{{- define "marimo.getSafeNestedValue" -}}
+{{- $obj := index . 0 -}}
+{{- $path := index . 1 -}}
+{{- $default := index . 2 -}}
+{{- $current := $obj -}}
+{{- range $segment := splitList "." $path -}}
+  {{- if hasKey $current $segment -}}
+    {{- $current = index $current $segment -}}
+  {{- else -}}
+    {{- $current = $default -}}
+    {{- break -}}
+  {{- end -}}
+{{- end -}}
+{{- $current -}}
+{{- end -}}

@@ -83,3 +83,7 @@ repository:
   pipRepository: ""
   condaRepository: ""
   mavenRepository: ""
+
+userPreferences:
+  darkMode: false
+  language: "en"
