@@ -3,6 +3,7 @@ name: marimo
 description: A Helm chart for deploying Marimo notebooks
 appVersion: 1.0.0
 version: 0.1.0
+icon: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg
 dependencies:
   - name: library-chart
     version: 1.6.8

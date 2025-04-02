@@ -61,12 +61,12 @@ spec:
               value: "8080"
             - name: MARIMO_HOST
               value: "0.0.0.0"
-            {{- range $key, $value := .Values.onyxia.environment }}
-            {{- if not (eq $key "ONYXIA_URL" "ONYXIA_RANDOM_SUBDOMAIN" "ONYXIA_DOMAIN") }}
+              {{- range $key, $value := .Values.onyxia.environment }}
+              {{- if not (or (eq $key "ONYXIA_URL") (eq $key "ONYXIA_RANDOM_SUBDOMAIN") (eq $key "ONYXIA_DOMAIN")) }}
             - name: {{ $key }}
               value: {{ $value | quote }}
-            {{- end }}
-            {{- end }}
+              {{- end }}
+              {{- end }}
             - name: ONYXIA_URL
               value: "https://marimo-${ONYXIA_RANDOM_SUBDOMAIN}.${ONYXIA_DOMAIN}"
             - name: ONYXIA_RANDOM_SUBDOMAIN
