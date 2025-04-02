@@ -24,15 +24,14 @@
               "title": "Name of the service's Docker image",
               "type": "string",
               "listEnum": [
-                "inseefrlab/onyxia-jupyter-pyspark:py3.12.9-spark3.5.4",
-                "inseefrlab/onyxia-jupyter-pyspark:py3.11.11-spark3.5.4"
+                "ghcr.io/marimo-team/marimo:latest"
               ],
               "render": "list",
               "hidden": {
                 "value": true,
                 "path": "service/image/custom/enabled"
               },
-              "default": "inseefrlab/onyxia-jupyter-pyspark:py3.12.9-spark3.5.4"
+              "default": "ghcr.io/marimo-team/marimo:latest"
             },
             "custom": {
               "title": "Custom image",
