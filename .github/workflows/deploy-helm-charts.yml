@@ -22,6 +22,21 @@ jobs:
         with:
           version: v3.12.0
 
+      - name: Update Helm dependencies
+        run: |
+          # Add the required repositories for dependencies
+          helm repo add inseefrlab https://inseefrlab.github.io/helm-charts-interactive-services
+
+          # Update dependencies for charts that need it
+          for chart in charts/*; do
+            if [ -d "$chart" ] && [ -f "$chart/Chart.yaml" ]; then
+              if grep -q "dependencies:" "$chart/Chart.yaml"; then
+                echo "Updating dependencies for $chart"
+                helm dependency update "$chart"
+              fi
+            fi
+          done
+
       - name: Lint Helm
         run: |
           helm lint charts/marimo --values charts/marimo/values.yaml
@@ -32,27 +47,8 @@ jobs:
       - name: Package charts
         run: |
           mkdir -p packaged-charts
-          
-          # First package library chart
-          helm package charts/library-chart -d packaged-charts
-          
-          # Create a local repo for dependencies
-          helm repo index packaged-charts --url https://jimmyflatting.github.io/helm-charts
-          helm repo add local-repo file://$(pwd)/packaged-charts
-          
-          # Update dependencies for charts that need it
           for chart in charts/*; do
-            if [ -d "$chart" ] && [ -f "$chart/Chart.yaml" ]; then
-              if grep -q "dependencies:" "$chart/Chart.yaml"; then
-                echo "Updating dependencies for $chart"
-                helm dependency update "$chart"
-              fi
-            fi
-          done
-          
-          # Now package all charts
-          for chart in charts/*; do
-            if [ -d "$chart" ] && [ "$chart" != "charts/library-chart" ]; then
+            if [ -d "$chart" ]; then
               helm package "$chart" -d packaged-charts
             fi
           done
