@@ -3,9 +3,9 @@ entries:
   duckdb:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-04-02T08:48:38.886680795Z"
+    created: "2025-04-02T08:54:43.953861639Z"
     description: A Helm chart for Kubernetes
-    digest: a63ad03f0c7d9b843ae7e79660c7cf633b67227374bbe5853d795039b339399f
+    digest: 839bd11c830a0cc1ee1e453014f5c564f90d286d341116986400d942553e1cf6
     name: duckdb
     type: application
     urls:
@@ -13,8 +13,8 @@ entries:
     version: 0.1.0
   library-chart:
   - apiVersion: v2
-    created: "2025-04-02T08:48:38.88711035Z"
-    digest: c51b8113037be9e43f903c2803970f7279a7a6482d404b6af807eca2742e1ef9
+    created: "2025-04-02T08:54:43.954558691Z"
+    digest: 8df48fbf75cd1c9da0751d8b31bd6481332ec38fdb6fa0d8944cc50362c17d2b
     name: library-chart
     type: library
     urls:
@@ -23,23 +23,23 @@ entries:
   marimo:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-02T08:48:38.887534253Z"
+    created: "2025-04-02T08:54:43.955019351Z"
     description: A Helm chart for deploying Marimo notebooks
-    digest: d52094df638281071d4fa8915275a601fc8d8c80b7aa84b25bc39107fa741a01
+    digest: 93648d2aec2d13fdbc0fd15767fef66786d132c00358e3e0716285b90e0497a6
     name: marimo
     urls:
     - https://jimmyflatting.github.io/helm-charts/marimo-0.1.0.tgz
     version: 0.1.0
   marimo-infree:
   - apiVersion: v2
-    created: "2025-04-02T08:48:38.888958664Z"
+    created: "2025-04-02T08:54:43.956458679Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: The JupyterLab IDE with PySpark, an interface to use Apache Spark
       from Python.
-    digest: dcd5e16d9711359cb04ed6a425fbab8f186d78601f29a867b4144ea61dd36123
+    digest: 67c12f3ff3e6f328c458681dedb76d57437563ad8bba4180c7a547c778c45263
     home: https://jupyter.org/
     icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/jupyter.png
     keywords:
@@ -55,4 +55,4 @@ entries:
     urls:
     - https://jimmyflatting.github.io/helm-charts/marimo-infree-2.2.7.tgz
     version: 2.2.7
-generated: "2025-04-02T08:48:38.886138878Z"
+generated: "2025-04-02T08:54:43.952981155Z"
