@@ -3,9 +3,9 @@ entries:
   duckdb:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-04-02T13:39:25.43410809Z"
+    created: "2025-04-02T14:14:43.893990686Z"
     description: A Helm chart for Kubernetes
-    digest: 45f85e62c1b7aa1c241694a18829ec6aa95743bd136da9d7c1828dff1f6ef4d0
+    digest: b64835b382a71ab4a08e0882625c7065d8108475a363cfbacc37b8a8c475c319
     name: duckdb
     type: application
     urls:
@@ -13,8 +13,8 @@ entries:
     version: 0.1.0
   library-chart:
   - apiVersion: v2
-    created: "2025-04-02T13:39:25.434546013Z"
-    digest: 2f441245c021389b6898013604b3cad5911fc6e49d2f97437bbf34a33044d695
+    created: "2025-04-02T14:14:43.894441045Z"
+    digest: 0262cc5e62f6dd816106701deb2db1d7be6debab214fbb29ef5626f170a28b12
     name: library-chart
     type: library
     urls:
@@ -23,27 +23,28 @@ entries:
   marimo:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-02T13:39:25.435435483Z"
+    created: "2025-04-02T14:14:43.895434826Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: A Helm chart for deploying Marimo notebooks
-    digest: a73eb69c2ace1735a43c9738d7dbc1fd7f674565f9b74365400b752c2cdcd0a1
+    digest: c0c52e7451455a656f2599325f24be067842cdf86f4ea2ce48d85352dd1e0364
+    icon: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg
     name: marimo
     urls:
     - https://jimmyflatting.github.io/helm-charts/marimo-0.1.0.tgz
     version: 0.1.0
   marimo-infree:
   - apiVersion: v2
-    created: "2025-04-02T13:39:25.436883759Z"
+    created: "2025-04-02T14:14:43.896841137Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: The JupyterLab IDE with PySpark, an interface to use Apache Spark
       from Python.
-    digest: 3aec1fdbe93caf18020db9f25f51275504d6b68963a5cdfd1401b4150cb69632
+    digest: 1fc09487f2e82e1e442aede902b41e1bf54cfd5ceec7ee3db118c31073f8e7f9
     home: https://jupyter.org/
     icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/jupyter.png
     keywords:
@@ -59,4 +60,4 @@ entries:
     urls:
     - https://jimmyflatting.github.io/helm-charts/marimo-infree-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-02T13:39:25.433535548Z"
+generated: "2025-04-02T14:14:43.892768802Z"
