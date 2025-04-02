@@ -1,13 +1,24 @@
 apiVersion: v1
 entries:
+  duckdb:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2025-04-02T06:50:29.396514381Z"
+    description: A Helm chart for Kubernetes
+    digest: 7bcc6a89fd02e0853a8bcd649a526ad27cb4c2313842b20e2223bf6bb034437a
+    name: duckdb
+    type: application
+    urls:
+    - https://jimmyflatting.github.io/helm-charts/duckdb-0.1.0.tgz
+    version: 0.1.0
   marimo:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-02T06:18:10.322397437Z"
+    created: "2025-04-02T06:50:29.396933302Z"
     description: A Helm chart for deploying Marimo notebooks
-    digest: b3b219ccb2057a8d64dbbfd80c59da08c31dd5fd9f1d3209981b0bdef5374c2e
+    digest: 03eee2185cbff9ff9ccf0c07c71340dba5729ae2defc0a64207a4332877bc7b5
     name: marimo
     urls:
     - https://jimmyflatting.github.io/helm-charts/marimo-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-02T06:18:10.321785929Z"
+generated: "2025-04-02T06:50:29.395956841Z"
