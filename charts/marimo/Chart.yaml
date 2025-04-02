@@ -1,5 +1,9 @@
 apiVersion: v2
 name: marimo
 description: A Helm chart for deploying Marimo notebooks
-version: 0.1.0
 appVersion: 1.0.0
+version: 0.1.0
+dependencies:
+  - name: library-chart
+    version: 1.6.8
+    repository: https://inseefrlab.github.io/helm-charts-interactive-services
