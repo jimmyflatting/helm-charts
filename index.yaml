@@ -3,9 +3,9 @@ entries:
   duckdb:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-04-02T08:54:43.953861639Z"
+    created: "2025-04-02T13:09:58.83295539Z"
     description: A Helm chart for Kubernetes
-    digest: 839bd11c830a0cc1ee1e453014f5c564f90d286d341116986400d942553e1cf6
+    digest: 65d9852f84e24e01d7309abf5a4a65a247d57c2fc2ed8b54b324bfd861d7219b
     name: duckdb
     type: application
     urls:
@@ -13,8 +13,8 @@ entries:
     version: 0.1.0
   library-chart:
   - apiVersion: v2
-    created: "2025-04-02T08:54:43.954558691Z"
-    digest: 8df48fbf75cd1c9da0751d8b31bd6481332ec38fdb6fa0d8944cc50362c17d2b
+    created: "2025-04-02T13:09:58.833610051Z"
+    digest: bea792290ce1d895201e3672e2b7d4fa74ffd4352831feb1852c3432c624112c
     name: library-chart
     type: library
     urls:
@@ -23,23 +23,23 @@ entries:
   marimo:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-02T08:54:43.955019351Z"
+    created: "2025-04-02T13:09:58.834118158Z"
     description: A Helm chart for deploying Marimo notebooks
-    digest: 93648d2aec2d13fdbc0fd15767fef66786d132c00358e3e0716285b90e0497a6
+    digest: 8a9f5a7ac93722106a92e77462db9efad58d3d3c07fc512de8efadcbaf1fadb3
     name: marimo
     urls:
     - https://jimmyflatting.github.io/helm-charts/marimo-0.1.0.tgz
     version: 0.1.0
   marimo-infree:
   - apiVersion: v2
-    created: "2025-04-02T08:54:43.956458679Z"
+    created: "2025-04-02T13:09:58.836958824Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: The JupyterLab IDE with PySpark, an interface to use Apache Spark
       from Python.
-    digest: 67c12f3ff3e6f328c458681dedb76d57437563ad8bba4180c7a547c778c45263
+    digest: 9d5327d72c405cc4f194bc1d4147c0ee0f5eb54cafc86acfe8ccc55b55f5a432
     home: https://jupyter.org/
     icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/jupyter.png
     keywords:
@@ -53,6 +53,6 @@ entries:
     - https://github.com/InseeFrLab/helm-charts-interactive-services
     type: application
     urls:
-    - https://jimmyflatting.github.io/helm-charts/marimo-infree-2.2.7.tgz
-    version: 2.2.7
-generated: "2025-04-02T08:54:43.952981155Z"
+    - https://jimmyflatting.github.io/helm-charts/marimo-infree-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-04-02T13:09:58.832335063Z"
