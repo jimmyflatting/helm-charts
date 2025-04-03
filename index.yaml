@@ -3,9 +3,9 @@ entries:
   duckdb:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-04-03T08:55:01.251012181Z"
+    created: "2025-04-03T09:15:14.862069472Z"
     description: A Helm chart for Kubernetes
-    digest: 39bcdae06729832b5d7d03b5484626b52f800662046fc7d6b0ef2bac3c77f8a4
+    digest: a7e012559aa6aa1aa07308e08f4eca3f3f3b80b01f66dae7276918c0e2b7e647
     name: duckdb
     type: application
     urls:
@@ -13,14 +13,14 @@ entries:
     version: 0.1.0
   jupyter-python:
   - apiVersion: v2
-    created: "2025-04-03T08:55:01.25250459Z"
+    created: "2025-04-03T09:15:14.863416935Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: The JupyterLab IDE with Python, Julia, and a collection of standard
       data science packages.
-    digest: 1c0212a04031775bf181c1905c01516582f8048bbb28c5d36376e96f0087607f
+    digest: 098cc65d84c30264f875eefbdca030c7a14fc300055d536ec523ecce4915199f
     home: https://jupyter.org/
     icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/jupyter.png
     keywords:
@@ -34,28 +34,19 @@ entries:
     urls:
     - https://jimmyflatting.github.io/helm-charts/jupyter-python-2.2.6.tgz
     version: 2.2.6
-  library-chart:
-  - apiVersion: v2
-    created: "2025-04-03T08:55:01.252920934Z"
-    digest: e75091433367ec7d5fa73d6a2b76c8caaf5eb5432e2d4bd95ca8191bb58cad8b
-    name: library-chart
-    type: library
-    urls:
-    - https://jimmyflatting.github.io/helm-charts/library-chart-1.6.12.tgz
-    version: 1.6.12
   marimo:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-03T08:55:01.25409825Z"
+    created: "2025-04-03T09:15:14.864579022Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: A Helm chart for deploying Marimo notebooks
-    digest: be355272f0d00a89f73ae355b64c2863724fa89350280064387eed8979a055f8
+    digest: 8dc0086c5b431ba8acd95f45eca74db952093e9e246f642e651e7ff1f8b998b4
     icon: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg
     name: marimo
     urls:
     - https://jimmyflatting.github.io/helm-charts/marimo-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-03T08:55:01.250494045Z"
+generated: "2025-04-03T09:15:14.861519317Z"
