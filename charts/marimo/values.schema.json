@@ -13,6 +13,28 @@
           "description": "Number of replicas for the Marimo service."
         }
       },
+      "kubernetes": {
+        "description": "configuration of your kubernetes access",
+          "enabled": {
+            "type": "boolean",
+            "description": "allow your service to access your namespace ressources",
+            "default": true
+          },
+          "role": {
+            "type": "string",
+            "description": "bind your service account to this kubernetes default role",
+            "default": "view",
+            "hidden": {
+              "value": false,
+              "path": "kubernetes/enabled"
+            },
+            "enum": [
+              "view",
+              "edit",
+              "admin"
+            ]
+          }
+      },
       "image": {
         "type": "object",
         "properties": {
@@ -80,66 +102,97 @@
       },
       "ingress": {
         "type": "object",
+        "form": true,
+        "title": "Ingress Details",
         "properties": {
           "enabled": {
+            "description": "Enable Ingress",
             "type": "boolean",
-            "default": false,
-            "description": "Enable ingress."
-          },
-          "annotations": {
-            "type": "object",
-            "additionalProperties": { "type": "string" },
-            "description": "Annotations for the ingress resource."
-          },
-          "hosts": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "host": {
-                  "type": "string",
-                  "description": "Hostname for the ingress."
-                },
-                "paths": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "path": {
-                        "type": "string",
-                        "default": "/",
-                        "description": "Path within the host."
-                      },
-                      "pathType": {
-                        "type": "string",
-                        "enum": ["ImplementationSpecific", "Prefix", "Exact"],
-                        "default": "ImplementationSpecific",
-                        "description": "Path matching behavior."
-                      }
-                    },
-                    "required": ["path", "pathType"]
-                  }
-                }
-              },
-              "required": ["host", "paths"]
+            "default": true,
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "k8s.ingress"
             }
           },
-          "tls": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "hosts": {
-                  "type": "array",
-                  "items": { "type": "string" },
-                  "description": "TLS hosts."
-                },
-                "secretName": {
-                  "type": "string",
-                  "description": "Name of the secret containing TLS certificate."
-                }
-              },
-              "required": ["hosts", "secretName"]
+          "hostname": {
+            "type": "string",
+            "form": true,
+            "title": "Hostname",
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-0.{{k8s.domain}}"
+            }
+          },
+          "userHostname": {
+            "type": "string",
+            "form": true,
+            "title": "Hostname",
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-user.{{k8s.domain}}"
+            }
+          },
+          "ingressClassName": {
+            "type": "string",
+            "form": true,
+            "title": "ingressClassName",
+            "default": "",
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "{{k8s.ingressClassName}}"
+            }
+          },
+          "useCertManager": {
+            "type": "boolean",
+            "description": "Whether CertManager should be used to generate a certificate",
+            "default": false,
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "k8s.useCertManager"
+            }
+          },
+          "certManagerClusterIssuer":{
+            "type": "string",
+            "description": "certManager cluster issuer",
+            "title": "CertManager Cluster Issuer",
+            "default": "",
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "k8s.certManagerClusterIssuer"
+            }
+          }
+        }
+      },
+      "route": {
+        "type": "object",
+        "form": true,
+        "title": "Route details",
+        "properties": {
+          "enabled": {
+            "description": "Enable route",
+            "type": "boolean",
+            "default": false,
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "k8s.route"
+            }
+          },
+          "hostname": {
+            "type": "string",
+            "form": true,
+            "title": "Hostname",
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-0.{{k8s.domain}}"
+            }
+          },
+          "userHostname": {
+            "type": "string",
+            "form": true,
+            "title": "Hostname",
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-user.{{k8s.domain}}"
             }
           }
         }
@@ -240,7 +293,7 @@
               }
             }
           },
-          "networking": {
+    "networking": {
                 "title": "Network access",
                 "type": "object",
                 "form": true,
@@ -282,8 +335,8 @@
                     }
                   }
                 }
-              },
-              "nodeSelector": {
+    },
+    "nodeSelector": {
       "title": "Node selector",
       "type": "object",
       "default": {},
@@ -445,7 +498,7 @@
         "overwriteSchemaWith": "tolerations.json"
       }
     },
-      "certificates": {
+    "certificates": {
       "description": "It can be used to inject certificate authority into the services, if the Helm chart in the catalog allows it you can bind this value to the Helm chart value to add some certificate authorities in the pod.",
       "type": "object",
       "x-onyxia": {
@@ -471,7 +524,7 @@
         }
       }
     },
-      "autoscaling": {
+    "autoscaling": {
         "type": "object",
         "properties": {
           "enabled": {
@@ -521,8 +574,8 @@
             }
           }
         }
-      },
-      "repository": {
+    },
+    "repository": {
         "type": "object",
         "properties": {
           "configMapName": {
@@ -546,8 +599,8 @@
             "description": "Custom maven repository URL."
           }
         }
-      },
-      "userPreferences": {
+    },
+    "userPreferences": {
         "type": "object",
         "properties": {
           "darkMode": {
@@ -561,8 +614,8 @@
             "description": "Default language for the UI."
           }
         }
-      },
-      "authentication": {
+    },
+    "authentication": {
         "type": "object",
         "properties": {
           "enabled": {
@@ -584,8 +637,8 @@
             }
           }
         }
-      },
-      "persistence": {
+    },
+    "persistence": {
         "type": "object",
         "properties": {
           "enabled": {
@@ -607,7 +660,7 @@
             }
           }
         }
-      }
     }
   }
   }
+}
