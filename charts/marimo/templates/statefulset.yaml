@@ -162,7 +162,7 @@ spec:
           args:
             - >
               {{- if .Values.global.authentication.enabled }}
-              marimo edit --host 0.0.0.0 --port 2718 --allow-origins "*"  --token --token-password="{{ .Values.global.authentication.token }}"
+              marimo edit --host 0.0.0.0 --port 2718 --allow-origins "*" --token --token-password="{{ .Values.global.authentication.token }}"
               {{- else }}
               marimo edit --no-token --host 0.0.0.0 --port 2718 --allow-origins "*"
               {{- end }}
