@@ -640,5 +640,13 @@
         }
     }
   }
-  }
+  },
+  "required": [
+    "replicaCount",
+    "image",
+    "ingress",
+    "service",
+    "resources",
+    "onyxia"
+  ]
 }
