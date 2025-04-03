@@ -46,37 +46,6 @@
               }
             }
           }
-        }
-      },
-      "service": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": ["ClusterIP", "NodePort", "LoadBalancer"],
-            "default": "ClusterIP",
-            "description": "Service type.",
-            "helmValuesSchema": {
-              "type": "string",
-              "enum": ["ClusterIP", "NodePort", "LoadBalancer"],
-              "description": "Service type."
-            }
-          },
-          "port": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 65535,
-            "default": 80,
-            "description": "Port on which the service is exposed.",
-            "helmValuesSchema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 65535,
-              "description": "Port on which the service is exposed."
-            }
-          }
-        },
-        "required": ["type", "port"]
       },
       "ingress": {
         "type": "object",
@@ -84,20 +53,20 @@
         "title": "Ingress Details",
         "properties": {
           "enabled": {
-            "description": "Enable Ingress (ingress.properties.enabled)",
+            "description": "Enable Ingress",
             "type": "boolean",
             "default": true,
             "x-onyxia": {
-              "hidden": false,
+              "hidden": true,
               "overwriteDefaultWith": "k8s.ingress"
             }
           },
           "hostname": {
             "type": "string",
             "form": true,
-            "title": "Hostname (properties.ingress.hostname)",
+            "title": "Hostname",
             "x-onyxia": {
-              "hidden": false,
+              "hidden": true,
               "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-0.{{k8s.domain}}"
             }
           },
@@ -116,7 +85,8 @@
             "title": "ingressClassName",
             "default": "",
             "x-onyxia": {
-              "hidden": true,
+              "hidden": false,
+              "description": "Ingress class name to use for the Ingress resource. Leave empty to use the default ingress class.",
               "overwriteDefaultWith": "{{k8s.ingressClassName}}"
             }
           },
@@ -159,8 +129,9 @@
             "type": "string",
             "form": true,
             "title": "Hostname",
+            "description": "Hostname for the route",
             "x-onyxia": {
-              "hidden": true,
+              "hidden": false,
               "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-0.{{k8s.domain}}"
             }
           },
@@ -175,476 +146,40 @@
           }
         }
       },
-      "resources": {
+      "networking": {
         "type": "object",
+        "form": true,
+        "title": "Networking detail",
         "properties": {
-          "limits": {
+          "user": {
             "type": "object",
+            "description": "user defined port",
             "properties": {
-              "cpu": {
-                "type": "string",
-                "description": "CPU limit (e.g. '500m', '1').",
-                "helmValuesSchema": {
-                  "type": "string",
-                  "description": "CPU limit (e.g. '500m', '1')."
-                }
+              "enabled": {
+                "type": "boolean",
+                "title": "Enable a custom service port",
+                "description": "Enable a custom service port",
+                "default": false
               },
-              "memory": {
-                "type": "string",
-                "description": "Memory limit (e.g. '512Mi', '1Gi').",
-                "helmValuesSchema": {
-                  "type": "string",
-                  "description": "Memory limit (e.g. '512Mi', '1Gi')."
-                }
-              }
-            }
-          },
-          "requests": {
-            "type": "object",
-            "properties": {
-              "cpu": {
-                "type": "string",
-                "description": "CPU request (e.g. '250m', '500m').",
-                "helmValuesSchema": {
-                  "type": "string",
-                  "description": "CPU request (e.g. '250m', '500m')."
-                }
-              },
-              "memory": {
-                "type": "string",
-                "description": "Memory request (e.g. '256Mi', '512Mi').",
-                "helmValuesSchema": {
-                  "type": "string",
-                  "description": "Memory request (e.g. '256Mi', '512Mi')."
-                }
-              }
-            }
-          }
-        }
-      },
-      "nodeSelector": {
-        "type": "object",
-        "additionalProperties": { "type": "string" },
-        "description": "Node selector for pod scheduling."
-      },
-      "tolerations": {
-        "type": "array",
-        "items": { "type": "object" },
-        "description": "Tolerations for scheduling onto tainted nodes."
-      },
-      "affinity": {
-        "type": "object",
-        "description": "Pod affinity and anti-affinity rules."
-      },
-      "onyxia": {
-        "type": "object",
-        "properties": {
-          "friendlyName": {
-            "type": "string",
-            "default": "Marimo",
-            "description": "Friendly name for the service in Onyxia UI.",
-            "helmValuesSchema": {
-              "type": "string",
-              "description": "Friendly name for the service in Onyxia UI."
-            }
-          },
-          "service": {
-            "type": "object",
-            "properties": {
               "port": {
                 "type": "integer",
-                "default": 80,
-                "description": "Port on which the service is exposed.",
-                "helmValuesSchema": {
-                  "type": "integer",
-                  "description": "Port on which the service is exposed."
-                }
-              },
-              "path": {
-                "type": "string",
-                "default": "/",
-                "description": "Path at which the service is accessible.",
-                "helmValuesSchema": {
-                  "type": "string",
-                  "description": "Path at which the service is accessible."
-                }
+                "description": "port of the custom service",
+                "title": "Custom service port",
+                "hidden": {
+                  "value": false,
+                  "path": "networking/user/enabled"
+                },
+                "default": 5000
               }
             }
-          },
-    "networking": {
-                "title": "Network access",
-                "type": "object",
-                "form": true,
-                "x-onyxia": {
-                  "overwriteSchemaWith": "ide/networking.json"
-                },
-                "properties": {
-                  "user": {
-                    "title": "Ports",
-                    "type": "object",
-                    "properties": {
-                      "enabled": {
-                        "title": "Enable access to your service through specific ports",
-                        "type": "boolean",
-                        "default": false
-                      },
-                      "port": {
-                        "title": "Port number to expose",
-                        "type": "integer",
-                        "hidden": {
-                          "value": false,
-                          "path": "networking/user/enabled"
-                        },
-                        "default": 5000
-                      },
-                      "ports": {
-                        "title": "Port numbers to expose",
-                        "type": "array",
-                        "items": {
-                          "type": "integer",
-                          "uniqueItems": true,
-                          "default": 5000
-                        },
-                        "default": [],
-                        "x-onyxia": {
-                          "hidden": true
-                        }
-                      }
-                    }
-                  }
-                }
-    },
-    "nodeSelector": {
-      "title": "Node selector",
-      "type": "object",
-      "default": {},
-      "additionalProperties": {
-        "type": "string"
-      },
-      "x-onyxia": {
-        "hidden": false,
-        "overwriteDefaultWith": "region.nodeSelector",
-        "overwriteSchemaWith": "nodeSelector.json"
-      }
-    },
-    "ingress": {
-      "type": "object",
-      "form": true,
-      "title": "Ingress Details",
-      "properties": {
-        "enabled": {
-          "description": "Enable Ingress",
-          "type": "boolean",
-          "default": true,
-          "x-onyxia": {
-            "hidden": false,
-            "overwriteDefaultWith": "k8s.ingress"
-          }
-        },
-        "hostname": {
-          "type": "string",
-          "form": true,
-          "title": "Hostname (properties.onyxia.ingress.hostname)",
-          "x-onyxia": {
-            "hidden": false,
-            "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-0.{{k8s.domain}}"
-          }
-        },
-        "userHostname": {
-          "type": "string",
-          "form": true,
-          "title": "Hostname",
-          "x-onyxia": {
-            "hidden": false,
-            "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-user.{{k8s.domain}}"
-          }
-        },
-        "ingressClassName": {
-          "type": "string",
-          "form": true,
-          "title": "ingressClassName",
-          "default": "",
-          "x-onyxia": {
-            "hidden": true,
-            "overwriteDefaultWith": "{{k8s.ingressClassName}}"
-          }
-        },
-        "useCertManager": {
-          "type": "boolean",
-          "description": "Whether CertManager should be used to generate a certificate",
-          "default": false,
-          "x-onyxia": {
-            "hidden": true,
-            "overwriteDefaultWith": "k8s.useCertManager"
-          }
-        },
-        "certManagerClusterIssuer":{
-          "type": "string",
-          "description": "certManager cluster issuer",
-          "title": "CertManager Cluster Issuer",
-          "default": "",
-          "x-onyxia": {
-            "hidden": true,
-            "overwriteDefaultWith": "k8s.certManagerClusterIssuer"
           }
         }
       }
     },
-    "route": {
-      "type": "object",
-      "form": true,
-      "title": "Route details",
-      "properties": {
-        "enabled": {
-          "description": "Enable route",
-          "type": "boolean",
-          "default": false,
-          "x-onyxia": {
-            "hidden": true,
-            "overwriteDefaultWith": "k8s.route"
-          }
-        },
-        "hostname": {
-          "type": "string",
-          "form": true,
-          "title": "Hostname",
-          "x-onyxia": {
-            "hidden": true,
-            "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-0.{{k8s.domain}}"
-          }
-        },
-        "userHostname": {
-          "type": "string",
-          "form": true,
-          "title": "Hostname",
-          "x-onyxia": {
-            "hidden": true,
-            "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-user.{{k8s.domain}}"
-          }
-        }
-      }
-    },
-    "startupProbe": {
-      "description": "Startup probe",
-      "type": "object",
-      "properties": {
-        "failureThreshold": {
-          "type": "integer",
-          "default": 60
-        },
-        "initialDelaySeconds": {
-          "type": "integer",
-          "default": 10
-        },
-        "periodSeconds": {
-          "type": "integer",
-          "default": 10
-        },
-        "successThreshold": {
-          "type": "integer",
-          "default": 1
-        },
-        "timeoutSeconds": {
-          "type": "integer",
-          "default": 2
-        }
-      },
-      "default": {
-        "failureThreshold": 60,
-        "initialDelaySeconds": 10,
-        "periodSeconds": 10,
-        "successThreshold": 1,
-        "timeoutSeconds": 2
-      },
-      "x-onyxia": {
-        "hidden": true,
-        "overwriteDefaultWith": "region.startupProbe",
-        "overwriteSchemaWith": "ide/startupProbe.json"
-      }
-    },
-    "tolerations": {
-      "description": "Array of tolerations",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "additionalProperties": true
-      },
-      "default": [],
-      "x-onyxia": {
-        "hidden": true,
-        "overwriteDefaultWith": "region.tolerations",
-        "overwriteSchemaWith": "tolerations.json"
-      }
-    },
-    "certificates": {
-      "description": "It can be used to inject certificate authority into the services, if the Helm chart in the catalog allows it you can bind this value to the Helm chart value to add some certificate authorities in the pod.",
-      "type": "object",
-      "x-onyxia": {
-        "overwriteSchemaWith": "certificates.json"
-      },
-      "default": {},
-      "properties": {
-        "cacerts": {
-          "type": "string",
-          "description": "String of concatenated CA certificates. Alternatively a target URL can be provided.",
-          "default": "",
-          "x-onyxia": {
-            "hidden": true
-          }
-        },
-        "pathToCaBundle": {
-          "type": "string",
-          "description": "String path where a bundle is made or injected by third party solution",
-          "default": "/usr/local/share/ca-certificates/",
-          "x-onyxia": {
-            "hidden": true
-          }
-        }
-      }
-    },
-    "autoscaling": {
-        "type": "object",
-        "properties": {
-          "enabled": {
-            "type": "boolean",
-            "default": false,
-            "description": "Enable autoscaling for the Marimo deployment.",
-            "helmValuesSchema": {
-              "type": "boolean",
-              "description": "Enable autoscaling for the Marimo deployment."
-            }
-          },
-          "minReplicas": {
-            "type": "integer",
-            "minimum": 1,
-            "default": 1,
-            "description": "Minimum number of replicas.",
-            "helmValuesSchema": {
-              "type": "integer",
-              "description": "Minimum number of replicas."
-            }
-          },
-          "maxReplicas": {
-            "type": "integer",
-            "default": 100,
-            "description": "Maximum number of replicas.",
-            "helmValuesSchema": {
-              "type": "integer",
-              "description": "Maximum number of replicas."
-            }
-          },
-          "targetCPUUtilizationPercentage": {
-            "type": "integer",
-            "default": 80,
-            "description": "Target CPU utilization percentage.",
-            "helmValuesSchema": {
-              "type": "integer",
-              "description": "Target CPU utilization percentage."
-            }
-          },
-          "targetMemoryUtilizationPercentage": {
-            "type": "integer",
-            "default": 80,
-            "description": "Target memory utilization percentage.",
-            "helmValuesSchema": {
-              "type": "integer",
-              "description": "Target memory utilization percentage."
-            }
-          }
-        }
-    },
-    "repository": {
-        "type": "object",
-        "properties": {
-          "configMapName": {
-            "type": "string",
-            "default": "",
-            "description": "ConfigMap name for repository configuration."
-          },
-          "pipRepository": {
-            "type": "string",
-            "default": "",
-            "description": "Custom pip repository URL."
-          },
-          "condaRepository": {
-            "type": "string",
-            "default": "",
-            "description": "Custom conda repository URL."
-          },
-          "mavenRepository": {
-            "type": "string",
-            "default": "",
-            "description": "Custom maven repository URL."
-          }
-        }
-    },
-    "userPreferences": {
-        "type": "object",
-        "properties": {
-          "darkMode": {
-            "type": "boolean",
-            "default": false,
-            "description": "Enable dark mode by default."
-          },
-          "language": {
-            "type": "string",
-            "default": "en",
-            "description": "Default language for the UI."
-          }
-        }
-    },
-    "authentication": {
-        "type": "object",
-        "properties": {
-          "enabled": {
-            "type": "boolean",
-            "default": false,
-            "description": "Enable token-based authentication.",
-            "helmValuesSchema": {
-              "type": "boolean",
-              "description": "Enable token-based authentication."
-            }
-          },
-          "token": {
-            "type": "string",
-            "default": "",
-            "description": "Authentication token (if empty, a random token will be generated).",
-            "helmValuesSchema": {
-              "type": "string",
-              "description": "Authentication token (if empty, a random token will be generated)."
-            }
-          }
-        }
-    },
-    "persistence": {
-        "type": "object",
-        "properties": {
-          "enabled": {
-            "type": "boolean",
-            "default": false,
-            "description": "Enable persistent storage.",
-            "helmValuesSchema": {
-              "type": "boolean",
-              "description": "Enable persistent storage."
-            }
-          },
-          "existingClaim": {
-            "type": "string",
-            "default": "",
-            "description": "Use an existing PVC (leave empty to create a new one).",
-            "helmValuesSchema": {
-              "type": "string",
-              "description": "Use an existing PVC (leave empty to create a new one)."
-            }
-          }
-        }
-    }
-  }
-  },
-  "required": [
-    "replicaCount",
-    "ingress",
-    "service",
-    "resources"
-  ]
+    "required": [
+      "replicaCount",
+      "ingress",
+      "route",
+      "networking"
+    ]
 }
