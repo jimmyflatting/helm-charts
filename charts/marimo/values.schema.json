@@ -13,28 +13,6 @@
           "description": "Number of replicas for the Marimo service."
         }
       },
-      "kubernetes": {
-        "description": "configuration of your kubernetes access",
-          "enabled": {
-            "type": "boolean",
-            "description": "allow your service to access your namespace ressources",
-            "default": true
-          },
-          "role": {
-            "type": "string",
-            "description": "bind your service account to this kubernetes default role",
-            "default": "view",
-            "hidden": {
-              "value": false,
-              "path": "kubernetes/enabled"
-            },
-            "enum": [
-              "view",
-              "edit",
-              "admin"
-            ]
-          }
-      },
       "image": {
         "type": "object",
         "properties": {
