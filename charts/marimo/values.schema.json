@@ -590,6 +590,52 @@
             "description": "Default language for the UI."
           }
         }
+      },
+      "authentication": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable token-based authentication.",
+            "helmValuesSchema": {
+              "type": "boolean",
+              "description": "Enable token-based authentication."
+            }
+          },
+          "token": {
+            "type": "string",
+            "default": "",
+            "description": "Authentication token (if empty, a random token will be generated).",
+            "helmValuesSchema": {
+              "type": "string",
+              "description": "Authentication token (if empty, a random token will be generated)."
+            }
+          }
+        }
+      },
+      "persistence": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable persistent storage.",
+            "helmValuesSchema": {
+              "type": "boolean",
+              "description": "Enable persistent storage."
+            }
+          },
+          "existingClaim": {
+            "type": "string",
+            "default": "",
+            "description": "Use an existing PVC (leave empty to create a new one).",
+            "helmValuesSchema": {
+              "type": "string",
+              "description": "Use an existing PVC (leave empty to create a new one)."
+            }
+          }
+        }
       }
     }
   }

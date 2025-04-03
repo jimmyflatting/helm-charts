@@ -11,6 +11,10 @@ discovery:
   metaflow: false
   chromadb: false
 
+# Add authentication configuration
+authentication:
+  enabled: false
+  token: ""  # Will generate a random token if not specified
 
 replicaCount: 1
 
@@ -113,6 +117,11 @@ init:
   regionInit: ""
   personalInit: ""
   personalInitArgs: ""
+
+# Add persistence configuration if it doesn't exist
+persistence:
+  enabled: false
+  existingClaim: ""
 
 # Array with (templated) extra environment variables to be made accessible within the service
 # e.g:

@@ -62,6 +62,13 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Create the name of the token secret
+*/}}
+{{- define "library-chart.secretNameToken" -}}
+{{- printf "%s-secrettoken" (include "library-chart.fullname" .) }}
+{{- end }}
+
+{{/*
 Get a value from a dictionary with default if it doesn't exist
 */}}
 {{- define "marimo.getSafeValue" -}}
