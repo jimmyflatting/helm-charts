@@ -2,7 +2,7 @@
 global:
   suspend: false
   authentication:
-    enabled: true
+    enabled: false
     token: ""
 
 service:
