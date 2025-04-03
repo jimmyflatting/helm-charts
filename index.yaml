@@ -3,9 +3,9 @@ entries:
   duckdb:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-04-03T09:41:20.977376408Z"
+    created: "2025-04-03T10:59:48.971729095Z"
     description: A Helm chart for Kubernetes
-    digest: ce449061927583e46132a9aab1b489e9007f5fac0bf741e4a2eb87cc1d3a1524
+    digest: 0d56e218dcad7a3a23d4272cc386e5580516d360c87d046b9b70273abad960d2
     name: duckdb
     type: application
     urls:
@@ -13,14 +13,14 @@ entries:
     version: 0.1.0
   jupyter-python:
   - apiVersion: v2
-    created: "2025-04-03T09:41:20.97881017Z"
+    created: "2025-04-03T10:59:48.973119856Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: The JupyterLab IDE with Python, Julia, and a collection of standard
       data science packages.
-    digest: 5801b5cc04589045b76b33536fbed61c158b66184b45427ab2b8006937211c20
+    digest: e0d8713b74a2248d200d2add4fdc9b33b6460908fbdfb743fa453c084efdf9d1
     home: https://jupyter.org/
     icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/jupyter.png
     keywords:
@@ -37,16 +37,16 @@ entries:
   marimo:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-03T09:41:20.979874929Z"
+    created: "2025-04-03T10:59:48.974307036Z"
     dependencies:
     - name: library-chart
-      repository: https://afredojala.github.io/onyx-helmcharts
-      version: 1.5.21
+      repository: https://inseefrlab.github.io/helm-charts-interactive-services
+      version: 1.6.8
     description: A Helm chart for deploying Marimo notebooks
-    digest: 73b44a3d81ce1b7c784ae4f2c8aa5de2984a39ea4ceb03be3969c4fc1a3ff191
+    digest: 0be1450243f1c5b64246fa24184efbb601d08dd23778f48e5528038346fa9e1e
     icon: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg
     name: marimo
     urls:
     - https://jimmyflatting.github.io/helm-charts/marimo-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-03T09:41:20.976748479Z"
+generated: "2025-04-03T10:59:48.97115981Z"
