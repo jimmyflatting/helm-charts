@@ -34,9 +34,7 @@ init:
 # extraEnvVars:
 #   - name: FOO
 #     value: "bar"
-extraEnvVars:
-  - name: MY_FOO
-    value: "bar"
+extraEnvVars: []
 
 environment:
   user: onyxia
