@@ -3,9 +3,9 @@ entries:
   duckdb:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-04-03T09:15:14.862069472Z"
+    created: "2025-04-03T09:26:45.260882185Z"
     description: A Helm chart for Kubernetes
-    digest: a7e012559aa6aa1aa07308e08f4eca3f3f3b80b01f66dae7276918c0e2b7e647
+    digest: 32f0b1d99b3c5e5c1d0d7151551fd1e1074ca35196b6f562dca328f0d7c0d83b
     name: duckdb
     type: application
     urls:
@@ -13,14 +13,14 @@ entries:
     version: 0.1.0
   jupyter-python:
   - apiVersion: v2
-    created: "2025-04-03T09:15:14.863416935Z"
+    created: "2025-04-03T09:26:45.262968033Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: The JupyterLab IDE with Python, Julia, and a collection of standard
       data science packages.
-    digest: 098cc65d84c30264f875eefbdca030c7a14fc300055d536ec523ecce4915199f
+    digest: db96540261c9424416522787355cc9fda4ec8f2aa3efa79d55bbdc4c5f434ad9
     home: https://jupyter.org/
     icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/jupyter.png
     keywords:
@@ -37,16 +37,16 @@ entries:
   marimo:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-03T09:15:14.864579022Z"
+    created: "2025-04-03T09:26:45.264277145Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: A Helm chart for deploying Marimo notebooks
-    digest: 8dc0086c5b431ba8acd95f45eca74db952093e9e246f642e651e7ff1f8b998b4
+    digest: 50ac694a3f82b58593fc545e292fb191882730677585f9e8f3887cdbb0c9aa28
     icon: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg
     name: marimo
     urls:
     - https://jimmyflatting.github.io/helm-charts/marimo-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-03T09:15:14.861519317Z"
+generated: "2025-04-03T09:26:45.260345684Z"
