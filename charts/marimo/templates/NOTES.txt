@@ -1,0 +1,18 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your Marimo instance is now available at:
+
+{{- if .Values.ingress.enabled }}
+  http{{ if .Values.ingress.useCertManager }}s{{ end }}://{{ .Values.ingress.hostname }}
+  
+Access in new tab: <a href="http{{ if .Values.ingress.useCertManager }}s{{ end }}://{{ .Values.ingress.hostname }}" target="_blank">Open Marimo</a>
+{{- else if .Values.route.enabled }}
+  http://{{ .Values.route.hostname }}
+  
+Access in new tab: <a href="http://{{ .Values.route.hostname }}" target="_blank">Open Marimo</a>
+{{- else }}
+  Use port-forwarding to access your Marimo instance:
+  kubectl port-forward service/{{ include "library-chart.fullname" . }} 8080:80 -n {{ .Release.Namespace }}
+  
+  Then visit: http://localhost:8080
+{{- end }}
