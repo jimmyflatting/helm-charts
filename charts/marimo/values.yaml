@@ -25,7 +25,7 @@ image:
 
 service:
   type: ClusterIP
-  port: 8080
+  port: 2718
   image:
     custom:
       enabled: false
@@ -63,13 +63,13 @@ networking:
   type: ClusterIP
   clusterIP: None
   service:
-    port: 8080
+    port: 2718
 onyxia:
   friendlyName: "Marimo"
   description: "Marimo is a reactive Python notebook that's designed to be used both as an interactive development environment and as a data app framework."
   icon: "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg"
   service:
-    port: 8080
+    port: 2718
   randomSubdomain: ${ONYXIA_RANDOM_SUBDOMAIN}
   domain: ${ONYXIA_DOMAIN}
   environment:
