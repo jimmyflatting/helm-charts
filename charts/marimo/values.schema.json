@@ -297,12 +297,9 @@
       }
     },
     "ingress": {
-      "title": "Ingress Details",
       "type": "object",
       "form": true,
-      "x-onyxia": {
-        "overwriteSchemaWith": "ide/ingress.json"
-      },
+      "title": "Ingress Details",
       "properties": {
         "enabled": {
           "description": "Enable Ingress",
@@ -350,7 +347,7 @@
             "overwriteDefaultWith": "k8s.useCertManager"
           }
         },
-        "certManagerClusterIssuer": {
+        "certManagerClusterIssuer":{
           "type": "string",
           "description": "certManager cluster issuer",
           "title": "CertManager Cluster Issuer",
@@ -358,14 +355,6 @@
           "x-onyxia": {
             "hidden": true,
             "overwriteDefaultWith": "k8s.certManagerClusterIssuer"
-          }
-        },
-        "useTlsSecret": {
-          "type": "boolean",
-          "description": "Whether you want to use the specified secretName in ingress tls",
-          "default": false,
-          "x-onyxia": {
-            "hidden": true
           }
         }
       }
