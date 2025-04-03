@@ -191,11 +191,11 @@ spec:
           {{- if .Values.service.image.custom.enabled }}
           image: "{{ .Values.service.image.custom.version }}"
           {{- else }}
-          image: "{{ .Values.service.image.version }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           {{- end }}
           command: ["/bin/sh","-c"]
           args: ["marimo edit --no-token"]
-          imagePullPolicy: {{ .Values.service.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: KUBERNETES_POD_NAME
               valueFrom:
@@ -205,7 +205,7 @@ spec:
               {{- if .Values.service.image.custom.enabled }}
               value: "{{ .Values.service.image.custom.version }}"
               {{- else }}
-              value: "{{ .Values.service.image.version }}"
+              value: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
               {{- end }}
             - name: NB_USER
               value: {{ .Values.environment.user }}
