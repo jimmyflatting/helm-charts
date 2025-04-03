@@ -13,70 +13,49 @@
           "description": "Number of replicas for the Marimo service."
         }
       },
-      "image": {
-        "type": "object",
-        "properties": {
-          "repository": {
-            "type": "string",
-            "default": "ghcr.io/marimo-team/marimo",
-            "description": "Docker image repository for Marimo.",
-            "helmValuesSchema": {
-              "type": "string",
-              "description": "Docker image repository for Marimo."
-            }
-          },
-          "tag": {
-            "type": "string",
-            "default": "latest",
-            "description": "Docker image tag.",
-            "helmValuesSchema": {
-              "type": "string",
-              "description": "Docker image tag."
-            }
-          },
-          "pullPolicy": {
-            "type": "string",
-            "enum": ["Always", "IfNotPresent", "Never"],
-            "default": "IfNotPresent",
-            "description": "Pull policy for the image.",
-            "helmValuesSchema": {
-              "type": "string",
-              "enum": ["Always", "IfNotPresent", "Never"],
-              "description": "Pull policy for the image."
-              }
-            }
-          }
-        }
-      },
       "service": {
         "type": "object",
         "properties": {
-          "type": {
-            "type": "string",
-            "enum": ["ClusterIP", "NodePort", "LoadBalancer"],
-            "default": "ClusterIP",
-            "description": "Service type.",
-            "helmValuesSchema": {
-              "type": "string",
-              "enum": ["ClusterIP", "NodePort", "LoadBalancer"],
-              "description": "Service type."
+          "image": {
+            "type": "object",
+            "properties": {
+              "repository": {
+                "type": "string",
+                "default": "ghcr.io/marimo-team/marimo",
+                "description": "Docker image repository for Marimo.",
+                "helmValuesSchema": {
+                  "type": "string",
+                  "description": "Docker image repository for Marimo."
+                }
+              },
+              "tag": {
+                "type": "string",
+                "default": "latest",
+                "description": "Docker image tag.",
+                "helmValuesSchema": {
+                  "type": "string",
+                  "description": "Docker image tag."
+                }
+              },
+              "pullPolicy": {
+                "type": "string",
+                "enum": ["Always", "IfNotPresent", "Never"],
+                "default": "IfNotPresent",
+                "description": "Pull policy for the image.",
+                "helmValuesSchema": {
+                  "type": "string",
+                  "enum": ["Always", "IfNotPresent", "Never"],
+                  "description": "Pull policy for the image."
+                }
+              }
             }
           },
-          "port": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 65535,
-            "default": 80,
-            "description": "Port on which the service is exposed.",
-            "helmValuesSchema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 65535,
-              "description": "Port on which the service is exposed."
-            }
+          "customPythonEnv": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable custom Python environment."
           }
-        },
-        "required": ["type", "port"]
+        }
       },
       "ingress": {
         "type": "object",

@@ -3,6 +3,7 @@ global:
   suspend: false
   authentication:
     enabled: false
+    token: ""
 
 service:
   image:
