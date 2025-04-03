@@ -268,8 +268,6 @@
       },
       "kubernetes": {
         "description": "configuration of your kubernetes access",
-        "type": "object",
-        "properties": {
           "enabled": {
             "type": "boolean",
             "description": "allow your service to access your namespace ressources",
