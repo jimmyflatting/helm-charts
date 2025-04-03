@@ -38,9 +38,6 @@ spec:
         {{- if not (empty (trim (include "library-chart.secretMLFlow" .))) }}
         checksum/mlflow: {{ include (print $.Template.BasePath "/secret-mlflow.yaml") . | sha256sum }}
         {{- end }}
-        {{- if not (empty (trim (include "library-chart.secretChromaDB" .))) }}
-        checksum/chromadb: {{ include (print $.Template.BasePath "/secret-chromadb.yaml") . | sha256sum }}
-        {{- end }}
         {{- if (include "library-chart.repository.enabled"  .) }}
         checksum/repository: {{ include (print $.Template.BasePath "/configmap-repository.yaml") . | sha256sum }}
         {{- end }}
@@ -239,10 +236,6 @@ spec:
             {{- if and .Values.discovery.mlflow (not (empty (trim (include "library-chart.secretMLFlow" .)))) }}
             - secretRef:
                 name: {{ include "library-chart.secretNameMLFlow" . }}
-            {{- end }}
-            {{- if not (empty (trim (include "library-chart.secretChromaDB" .))) }}
-            - secretRef:
-                name: {{ include "library-chart.secretNameChromaDB" . }}
             {{- end }}
             {{- if .Values.extraEnvVars }}
             - secretRef:

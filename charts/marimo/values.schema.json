@@ -83,7 +83,7 @@
         "properties": {
           "enabled": {
             "type": "boolean",
-            "default": true,
+            "default": false,
             "description": "Enable ingress."
           },
           "annotations": {
