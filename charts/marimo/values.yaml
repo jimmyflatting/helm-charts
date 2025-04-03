@@ -153,7 +153,7 @@ networking:
     ports: []
 
 ingress:
-  enabled: true
+  enabled: false
   tls: true
   ingressClassName: ""
   annotations: []
