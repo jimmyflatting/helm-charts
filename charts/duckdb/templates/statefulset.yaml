@@ -158,14 +158,6 @@ spec:
           {{- else }}
           image: "{{ .Values.service.image.version }}"
           {{- end }}
-          command: ["/bin/sh","-c"]
-          args:
-            - >
-              {{- if .Values.global.authentication.enabled }}
-              duckdb -ui
-              {{- else }}
-              duckdb -ui
-              {{- end }}
           imagePullPolicy: {{ .Values.service.image.pullPolicy }}
           env:
             - name: KUBERNETES_POD_NAME
