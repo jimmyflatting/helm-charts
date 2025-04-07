@@ -1,0 +1,10 @@
+apiVersion: v2
+name: DuckDB UI
+description: A Helm chart for deploying DuckDB UI
+appVersion: 1.0.0
+version: 0.1.0
+icon: https://raw.githubusercontent.com/duckdb/duckdb/main/docs/_static/duckdb.svg
+dependencies:
+  - name: library-chart
+    version: 1.6.8
+    repository: https://inseefrlab.github.io/helm-charts-interactive-services
