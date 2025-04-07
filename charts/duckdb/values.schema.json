@@ -1,0 +1,192 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "DuckDB Helm Chart Values",
+    "description": "Schema for DuckDB Helm Chart values.",
+    "type": "object",
+    "properties": {
+      "replicaCount": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 1,
+        "description": "Number of replicas for the DuckDB service.",
+        "helmValuesSchema": {
+          "type": "integer",
+          "description": "Number of replicas for the DuckDB service."
+        }
+      },
+      "image": {
+        "type": "object",
+        "properties": {
+          "repository": {
+            "type": "string",
+            "default": "qldrsc/duckdb",
+            "description": "Docker image repository for DuckDB.",
+            "helmValuesSchema": {
+              "type": "string",
+              "description": "Docker image repository for DuckDB."
+            }
+          },
+          "tag": {
+            "type": "string",
+            "default": "latest",
+            "description": "Docker image tag.",
+            "helmValuesSchema": {
+              "type": "string",
+              "description": "Docker image tag."
+            }
+          },
+          "pullPolicy": {
+            "type": "string",
+            "enum": ["Always", "IfNotPresent", "Never"],
+            "default": "IfNotPresent",
+            "description": "Pull policy for the image.",
+            "helmValuesSchema": {
+              "type": "string",
+              "enum": ["Always", "IfNotPresent", "Never"],
+              "description": "Pull policy for the image."
+              }
+            }
+          }
+      },
+      "ingress": {
+        "type": "object",
+        "form": true,
+        "title": "Ingress Details",
+        "properties": {
+          "enabled": {
+            "description": "Enable Ingress",
+            "type": "boolean",
+            "default": true,
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "k8s.ingress"
+            }
+          },
+          "hostname": {
+            "type": "string",
+            "form": true,
+            "title": "Hostname",
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-0.{{k8s.domain}}"
+            }
+          },
+          "userHostname": {
+            "type": "string",
+            "form": true,
+            "title": "Hostname",
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-user.{{k8s.domain}}"
+            }
+          },
+          "ingressClassName": {
+            "type": "string",
+            "form": true,
+            "title": "ingressClassName",
+            "default": "",
+            "x-onyxia": {
+              "hidden": false,
+              "description": "Ingress class name to use for the Ingress resource. Leave empty to use the default ingress class.",
+              "overwriteDefaultWith": "{{k8s.ingressClassName}}"
+            }
+          },
+          "useCertManager": {
+            "type": "boolean",
+            "description": "Whether CertManager should be used to generate a certificate",
+            "default": false,
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "k8s.useCertManager"
+            }
+          },
+          "certManagerClusterIssuer":{
+            "type": "string",
+            "description": "certManager cluster issuer",
+            "title": "CertManager Cluster Issuer",
+            "default": "",
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "k8s.certManagerClusterIssuer"
+            }
+          }
+        }
+      },
+      "route": {
+        "type": "object",
+        "form": true,
+        "title": "Route details",
+        "properties": {
+          "enabled": {
+            "description": "Enable route",
+            "type": "boolean",
+            "default": false,
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "k8s.route"
+            }
+          },
+          "hostname": {
+            "type": "string",
+            "form": true,
+            "title": "Hostname",
+            "description": "Hostname for the route",
+            "x-onyxia": {
+              "hidden": false,
+              "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-0.{{k8s.domain}}"
+            }
+          },
+          "userHostname": {
+            "type": "string",
+            "form": true,
+            "title": "Hostname",
+            "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-user.{{k8s.domain}}"
+            }
+          }
+        }
+      },
+      "networking": {
+        "type": "object",
+        "form": true,
+        "title": "Networking detail",
+        "properties": {
+          "user": {
+            "type": "object",
+            "description": "user defined port",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "title": "Enable a custom service port",
+                "description": "Enable a custom service port",
+                "default": false
+              },
+              "port": {
+                "type": "integer",
+                "description": "port of the custom service",
+                "title": "Custom service port",
+                "hidden": {
+                  "value": false,
+                  "path": "networking/user/enabled"
+                },
+                "default": 4213
+              }
+            }
+          }
+        }
+      },
+      "security": {
+
+
+
+        
+      }
+    },
+    "required": [
+      "replicaCount",
+      "ingress",
+      "route",
+      "networking"
+    ]
+}
