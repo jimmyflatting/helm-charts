@@ -1,5 +1,5 @@
 apiVersion: v2
-name: DuckDB UI
+name: duckdb-ui
 description: A Helm chart for deploying DuckDB UI
 appVersion: 1.0.0
 version: 0.1.0
