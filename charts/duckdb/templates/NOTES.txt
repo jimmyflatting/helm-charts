@@ -1,6 +1,6 @@
 Thank you for installing {{ .Chart.Name }}.
 
-Your Marimo instance is now available at:
+Your DuckDB instance is now available at:
 
 {{- if .Values.ingress.enabled }}
   http{{ if .Values.ingress.useCertManager }}s{{ end }}://{{ .Values.ingress.hostname }}?access_token={{ .Values.global.authentication.token }}

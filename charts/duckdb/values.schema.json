@@ -19,7 +19,7 @@
         "properties": {
           "repository": {
             "type": "string",
-            "default": "qldrsc/duckdb",
+            "default": "datacatering/duckdb",
             "description": "Docker image repository for DuckDB.",
             "helmValuesSchema": {
               "type": "string",
@@ -28,7 +28,7 @@
           },
           "tag": {
             "type": "string",
-            "default": "latest",
+            "default": "v1.2.1",
             "description": "Docker image tag.",
             "helmValuesSchema": {
               "type": "string",
