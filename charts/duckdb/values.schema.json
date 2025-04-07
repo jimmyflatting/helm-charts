@@ -27,7 +27,7 @@
           },
           "tag": {
             "type": "string",
-            "default": "latest",
+            "default": "v1.2.1",
             "description": "Docker image tag.",
             "helmValuesSchema": {
               "type": "string",

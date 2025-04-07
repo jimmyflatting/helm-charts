@@ -7,11 +7,11 @@ global:
 
 service:
   image:
-    version: "datacatering/duckdb:latest"
+    version: "datacatering/duckdb:v1.2.1"
     pullPolicy: IfNotPresent
     custom:
       enabled: false
-      version: "datacatering/duckdb:latest"
+      version: "datacatering/duckdb:v1.2.1"
   customPythonEnv: false
 
 security:
