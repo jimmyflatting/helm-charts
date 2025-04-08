@@ -18,7 +18,7 @@
         "properties": {
           "repository": {
             "type": "string",
-            "default": "ghcr.io/knowit-solutions-cocreate/duckdb-image",
+            "default": "ghcr.io/jimmyflatting/duckdb-image",
             "description": "Docker image repository for DuckDB.",
             "helmValuesSchema": {
               "type": "string",

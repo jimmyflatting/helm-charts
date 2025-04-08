@@ -7,11 +7,11 @@ global:
 
 service:
   image:
-    version: "ghcr.io/knowit-solutions-cocreate/duckdb-image:latest"
+    version: "ghcr.io/jimmyflatting/duckdb-image:latest"
     pullPolicy: IfNotPresent
     custom:
       enabled: false
-      version: "ghcr.io/knowit-solutions-cocreate/duckdb-image:latest"
+      version: "ghcr.io/jimmyflatting/duckdb-image:latest"
   customPythonEnv: false
 
 security:
