@@ -1,16 +1,16 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Marimo Helm Chart Values",
+    "title": "DuckDB Helm Chart Values",
     "type": "object",
     "properties": {
       "replicaCount": {
         "type": "integer",
         "minimum": 1,
         "default": 1,
-        "description": "Number of replicas for the Marimo service.",
+        "description": "Number of replicas for the DuckDB service.",
         "helmValuesSchema": {
           "type": "integer",
-          "description": "Number of replicas for the Marimo service."
+          "description": "Number of replicas for the DuckDB service."
         }
       },
       "image": {
@@ -18,11 +18,11 @@
         "properties": {
           "repository": {
             "type": "string",
-            "default": "ghcr.io/caioricciuti/duck-ui",
-            "description": "Docker image repository for Marimo.",
+            "default": "ghcr.io/knowit-solutions-cocreate/duckdb-image",
+            "description": "Docker image repository for DuckDB.",
             "helmValuesSchema": {
               "type": "string",
-              "description": "Docker image repository for Marimo."
+              "description": "Docker image repository for DuckDB."
             }
           },
           "tag": {
@@ -169,7 +169,7 @@
                   "value": false,
                   "path": "networking/user/enabled"
                 },
-                "default": 5522
+                "default": 4213
               }
             }
           }
