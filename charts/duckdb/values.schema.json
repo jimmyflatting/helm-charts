@@ -169,7 +169,7 @@
                   "value": false,
                   "path": "networking/user/enabled"
                 },
-                "default": 4213
+                "default": 80
               }
             }
           }
