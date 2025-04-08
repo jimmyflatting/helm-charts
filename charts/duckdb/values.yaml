@@ -1,4 +1,4 @@
-# Default values for marimo.
+# Default values for duckdb.
 global:
   suspend: false
   authentication:

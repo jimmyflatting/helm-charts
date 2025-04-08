@@ -1,16 +1,16 @@
 Thank you for installing {{ .Chart.Name }}.
 
-Your Marimo instance is now available at:
+Your duckdb instance is now available at:
 
 {{- if .Values.ingress.enabled }}
   http{{ if .Values.ingress.useCertManager }}s{{ end }}://{{ .Values.ingress.hostname }}?access_token={{ .Values.global.authentication.token }}
   
-Access in new tab: <a href="http{{ if .Values.ingress.useCertManager }}s{{ end }}://{{ .Values.ingress.hostname }}?access_token={{ .Values.global.authentication.token }}" target="_blank">Open Marimo</a>
+Access in new tab: <a href="http{{ if .Values.ingress.useCertManager }}s{{ end }}://{{ .Values.ingress.hostname }}?access_token={{ .Values.global.authentication.token }}" target="_blank">Open duckdb</a>
 
 {{- else if .Values.route.enabled }}
   http://{{ .Values.route.hostname }}?access_token={{ .Values.global.authentication.token }}
   
-Access in new tab: <a href="http://{{ .Values.route.hostname }}?access_token={{ .Values.global.authentication.token }}" target="_blank">Open Marimo</a>
+Access in new tab: <a href="http://{{ .Values.route.hostname }}?access_token={{ .Values.global.authentication.token }}" target="_blank">Open duckdb</a>
 
 {{- else }}
     Something went wrong, try again later.

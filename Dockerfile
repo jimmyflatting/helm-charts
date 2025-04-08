@@ -16,7 +16,7 @@ RUN curl -L https://github.com/duckdb/duckdb/releases/download/v1.2.1/duckdb_cli
 # Create an entrypoint script that starts the UI server without browser opening
 RUN echo '#!/bin/bash\n\
 echo "Starting DuckDB UI server..."\n\
-duckdb -c "CALL start_ui_server();"\n\
+duckdb -cmd "CALL start_ui_server();"\n\
 # Keep container running\n\
 tail -f /dev/null' > /entrypoint.sh && \
     chmod +x /entrypoint.sh
