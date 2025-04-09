@@ -51,9 +51,6 @@ spec:
         {{- include "library-chart.selectorLabels" . | nindent 8 }}
     spec:
       volumes:
-        - name: nginx-config
-          configMap:
-            name: nginx-config
         - name: config-files
           emptyDir: {}
         - name: home
@@ -153,19 +150,6 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
       containers:
-       # Nginx sidecar container
-        - name: nginx-proxy
-          image: nginx:latest
-          ports:
-            - name: http
-              containerPort: 80
-          volumeMounts:
-            - name: nginx-config
-              mountPath: /etc/nginx/conf.d
-            - name: config-files
-              mountPath: /usr/share/nginx/html
-              subPath: html
-        # DuckDB container
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
