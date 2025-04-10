@@ -88,9 +88,6 @@ spec:
           secret:
             secretName: {{ include "library-chart.secretNameCacerts" . }}
         {{- end }}
-        - name: nginx-config
-          configMap:
-            name: {{ include "library-chart.fullname" . }}-nginx-config
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -242,18 +239,18 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: {{ .Values.networking.service.port }}
+              port: 4213
             timeoutSeconds: 2
             failureThreshold: 6
           readinessProbe:
             httpGet:
               path: /
-              port: {{ .Values.networking.service.port }}
+              port: 4213
           {{- if hasKey .Values "startupProbe" }}
           startupProbe:
             httpGet:
               path: /
-              port: {{ .Values.networking.service.port }}
+              port: 4213
             {{- toYaml .Values.startupProbe | nindent 12 }}
           {{- end }}
           resources:
@@ -291,22 +288,6 @@ spec:
               mountPath: {{ .Values.certificates.pathToCaBundle }}
               subPath: cacerts
             {{- end }}
-        - name: nginx-sidecar
-          image: nginx:stable-alpine
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 80
-              name: nginx-proxy
-          volumeMounts:
-            - name: nginx-config
-              mountPath: /etc/nginx/conf.d
-          resources:
-            limits:
-              cpu: 100m
-              memory: 128Mi
-            requests:
-              cpu: 50m
-              memory: 64Mi
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
