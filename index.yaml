@@ -3,13 +3,13 @@ entries:
   duckdb-ui:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-10T06:27:15.232596993Z"
+    created: "2025-04-10T07:09:59.881571966Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: A Helm chart for deploying DuckDB UI
-    digest: ba39dac1688168c054ae9dc13dbf64f9f5fcbdfc0917b2beff165db0e71ce2bd
+    digest: 94ddce69652bb87e1c4818221e48d83e2a69a528c888a62fbc18088c0cbaad0f
     icon: https://raw.githubusercontent.com/duckdb/duckdb/main/docs/_static/duckdb.svg
     name: duckdb-ui
     urls:
@@ -17,14 +17,14 @@ entries:
     version: 0.1.0
   jupyter-python:
   - apiVersion: v2
-    created: "2025-04-10T06:27:15.233941187Z"
+    created: "2025-04-10T07:09:59.883980954Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: The JupyterLab IDE with Python, Julia, and a collection of standard
       data science packages.
-    digest: 2ef1c3a298028348bf8ba6ec9b6c31607bcd00e8d7472d125a6bded0c3d8b836
+    digest: b48f61ef29c0bfea573dc771131f327cdc554dc125536762cc88cd8a8f98b0b7
     home: https://jupyter.org/
     icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/jupyter.png
     keywords:
@@ -40,8 +40,8 @@ entries:
     version: 2.2.6
   library-chart:
   - apiVersion: v2
-    created: "2025-04-10T06:27:15.234273977Z"
-    digest: a2674322ae8b0b51afe5c4c3d471a12e937131c9a17af4966f86e2bac11d1f18
+    created: "2025-04-10T07:09:59.884568709Z"
+    digest: 5d264d4639e109c05c0ccecc9dba03592aacf3eb393d868b313a50b19edb2d77
     name: library-chart
     type: library
     urls:
@@ -50,16 +50,16 @@ entries:
   marimo:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-10T06:27:15.235406737Z"
+    created: "2025-04-10T07:09:59.886725107Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: A Helm chart for deploying Marimo notebooks
-    digest: 6e7baffe0fdd5dda0022531713ec6eb84d48fd05ed398cf7a4039356ea94fb33
+    digest: 01355f7f74d3077cb1c7715acf2cc4e17676c4beed03ad0b6b63e4a1926ed550
     icon: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg
     name: marimo
     urls:
     - https://jimmyflatting.github.io/helm-charts/marimo-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-10T06:27:15.231245035Z"
+generated: "2025-04-10T07:09:59.879137029Z"
