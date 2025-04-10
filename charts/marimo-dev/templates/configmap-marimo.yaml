@@ -19,7 +19,7 @@ data:
     line_length = 79
 
     [display]
-    theme = "light"
+    theme = "dark"
     code_editor_font_size = 14
     cell_output = "above"
     default_width = "medium"
@@ -44,7 +44,7 @@ data:
     follow_symlink = false
 
     [package_management]
-    manager = "pip"
+    manager = "uv"
 
     [language_servers.pylsp]
     enabled = true
