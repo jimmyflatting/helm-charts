@@ -162,6 +162,21 @@ spec:
           image: "{{ .Values.service.image.version }}"
           {{- end }}
           imagePullPolicy: {{ .Values.service.image.pullPolicy }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              # Start the DuckDB UI server in the background
+              python /app/init.py &
+              
+              # Keep the container running
+              while true; do
+                sleep 10
+                # Check if the process is still running
+                if ! pgrep -f "python /app/init.py" > /dev/null; then
+                  echo "DuckDB UI server process not found, restarting..."
+                  python /app/init.py &
+                fi
+              done
           env:
             - name: KUBERNETES_POD_NAME
               valueFrom:
@@ -236,23 +251,25 @@ spec:
             - secretRef:
                 name: {{ include "library-chart.secretNameExtraEnv" . }}
             {{- end }}
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 4213
-            timeoutSeconds: 2
-            failureThreshold: 6
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 4213
-          {{- if hasKey .Values "startupProbe" }}
           startupProbe:
             httpGet:
               path: /
               port: 4213
-            {{- toYaml .Values.startupProbe | nindent 12 }}
-          {{- end }}
+            failureThreshold: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 4213
+            timeoutSeconds: 5
+            failureThreshold: 3
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 4213
+            timeoutSeconds: 5
+            periodSeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

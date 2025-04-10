@@ -1,0 +1,10 @@
+apiVersion: v2
+name: marimo-dev
+description: A Helm chart for deploying Marimo notebooks in dev mode
+appVersion: 1.0.0
+version: 0.1.0
+icon: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg
+dependencies:
+  - name: library-chart
+    version: 1.6.8
+    repository: https://inseefrlab.github.io/helm-charts-interactive-services
