@@ -140,9 +140,9 @@ networking:
   type: ClusterIP
   clusterIP: None
   service:
-    port: 4213
+    port: 80
   sparkui:
-    port: 4213
+    port: 80
   # Custom user-specified extra ports exposition.
   # If ingress or route is enabled, the exposed ports are also made available at the
   # {ingress,route}.userHostname URL (or variations, in case several ports are provided).
