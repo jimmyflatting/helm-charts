@@ -3,8 +3,17 @@ import time
 import sys
 import socket
 import os
+import signal
+
+def signal_handler(signum, frame):
+    print("\nShutting down DuckDB server...")
+    sys.exit(0)
 
 def initialize_duckdb():
+    # Set up signal handlers
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+    
     # Connect to an in-memory database
     print("Connecting to DuckDB...")
     conn = duckdb.connect(':memory:')
@@ -45,8 +54,8 @@ def initialize_duckdb():
     # Start the server
     print("\nStarting DuckDB UI server...")
     try:
-        # Try to start the server with a different approach
-        conn.execute("CALL start_ui_server();")
+        # Start the server with explicit host binding
+        conn.execute(f"CALL start_ui_server(host='{host}', port=4213);")
         print("DuckDB UI server started successfully")
         
         # Wait a moment for the server to start
@@ -75,10 +84,16 @@ def initialize_duckdb():
         print(f"Error starting server: {str(e)}")
         sys.exit(1)
     
-    # Keep the script running
+    # Keep the script running and maintain the connection
     try:
         while True:
-            time.sleep(1)
+            # Check if the server is still running
+            try:
+                conn.execute("SELECT 1;")
+            except Exception as e:
+                print(f"Error checking server status: {str(e)}")
+                sys.exit(1)
+            time.sleep(5)
     except KeyboardInterrupt:
         print("\nShutting down DuckDB server...")
         sys.exit(0)
