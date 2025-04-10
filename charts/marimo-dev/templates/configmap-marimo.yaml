@@ -6,26 +6,6 @@ metadata:
     {{- include "marimo.labels" . | nindent 4 }}
 data:
   marimo.toml: |
-    [display]
-    theme = "dark"
-    code_editor_font_size = 14
-    cell_output = "above"
-    default_width = "medium"
-    dataframes = "rich"
-
-    [save]
-    autosave = "after_delay"
-    autosave_delay = 1000
-    format_on_save = false
-
-    [snippets]
-    custom_paths = []
-    include_default_snippets = true
-
-    [completion]
-    activate_on_typing = true
-    copilot = false
-
     [runtime]
     auto_instantiate = true
     auto_reload = "off"
@@ -34,6 +14,37 @@ data:
     output_max_bytes = 8000000
     std_stream_max_bytes = 1000000
     pythonpath = []
+
+    [formatting]
+    line_length = 79
+
+    [display]
+    theme = "light"
+    code_editor_font_size = 14
+    cell_output = "above"
+    default_width = "medium"
+    dataframes = "rich"
+
+    [completion]
+    activate_on_typing = true
+    copilot = false
+
+    [keymap]
+    preset = "default"
+
+    [keymap.overrides]
+
+    [save]
+    autosave = "after_delay"
+    autosave_delay = 1000
+    format_on_save = false
+
+    [server]
+    browser = "default"
+    follow_symlink = false
+
+    [package_management]
+    manager = "pip"
 
     [language_servers.pylsp]
     enabled = true
@@ -44,17 +55,6 @@ data:
     enable_pylint = false
     enable_pyflakes = false
 
-    [keymap]
-    preset = "default"
-
-    [keymap.overrides]
-
-    [package_management]
-    manager = "uv"
-
-    [server]
-    browser = "default"
-    follow_symlink = false
-
-    [formatting]
-    line_length = 79 
+    [snippets]
+    custom_paths = []
+    include_default_snippet = true 

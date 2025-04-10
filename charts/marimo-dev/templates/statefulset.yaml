@@ -298,7 +298,7 @@ spec:
               mountPath: /opt/onyxia-init.sh
               subPath: onyxia-init.sh
             - name: marimo-config
-              mountPath: /home/{{ .Values.environment.user }}/.marimo.toml
+              mountPath: /root/.config/marimo/marimo.toml
               subPath: marimo.toml
             - name: home
               mountPath: /home/{{ .Values.environment.user }}
