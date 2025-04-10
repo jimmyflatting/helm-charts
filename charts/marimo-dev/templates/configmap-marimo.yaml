@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "marimo.fullname" . }}-marimo-config
   labels:
-    {{- include "marimo.labels" . | nindent 4
+    {{- include "marimo.labels" . | nindent 4 }}
 data:
   marimo.toml: |
     [display]
