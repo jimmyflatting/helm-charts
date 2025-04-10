@@ -14,9 +14,10 @@ def initialize_duckdb():
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
     
-    # Connect to an in-memory database
+    # Connect to a persistent database file
     print("Connecting to DuckDB...")
-    conn = duckdb.connect(':memory:')
+    db_path = os.path.join('/app/data', 'duckdb.db')
+    conn = duckdb.connect(db_path)
     
     # Install and load necessary extensions
     print("Installing and loading extensions...")
@@ -46,6 +47,7 @@ def initialize_duckdb():
     # Print user and permissions info
     print(f"\nRunning as user: {os.getuid()}:{os.getgid()}")
     print(f"Current working directory: {os.getcwd()}")
+    print(f"Database path: {db_path}")
     
     # Get host from environment variable or use default
     host = os.environ.get('DUCKDB_UI_HOST', '0.0.0.0')
@@ -54,8 +56,8 @@ def initialize_duckdb():
     # Start the server
     print("\nStarting DuckDB UI server...")
     try:
-        # Start the server with explicit host binding
-        conn.execute(f"CALL start_ui_server(host='{host}', port=4213);")
+        # Start the server without named parameters
+        conn.execute("CALL start_ui_server();")
         print("DuckDB UI server started successfully")
         
         # Wait a moment for the server to start

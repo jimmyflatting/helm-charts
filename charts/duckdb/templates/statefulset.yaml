@@ -65,6 +65,8 @@ spec:
           emptyDir:
             medium: Memory
             sizeLimit: 10Gi
+        - name: duckdb-data
+          emptyDir: {}
         {{- if (.Values.proxy).enabled }}
         - name: secret-proxy
           secret:
@@ -262,6 +264,8 @@ spec:
               name: home
             - mountPath: /dev/shm
               name: dshm
+            - mountPath: /app/data
+              name: duckdb-data
             {{- if (.Values.s3).enabled }}
             - mountPath: /opt/hadoop/etc/hadoop/core-site.xml
               subPath: coresite/core-site.xml
@@ -287,6 +291,22 @@ spec:
               mountPath: {{ .Values.certificates.pathToCaBundle }}
               subPath: cacerts
             {{- end }}
+        - name: nginx-sidecar
+          image: nginx:stable-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+              name: nginx-proxy
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

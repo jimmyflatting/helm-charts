@@ -21,6 +21,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN useradd -m -u 1000 duckdb && \
     chown -R duckdb:duckdb /app
 
+# Create a directory for the database file
+RUN mkdir -p /app/data && \
+    chown -R duckdb:duckdb /app/data
+
 # Switch to non-root user
 USER duckdb
 
