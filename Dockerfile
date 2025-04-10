@@ -1,27 +1,43 @@
-FROM bitnami/minideb:bullseye
+# Use Python slim image as base
+FROM python:3.11-slim
 
-ARG DUCKDB_VERSION
+# Set working directory
+WORKDIR /app
 
-RUN echo "deb http://deb.debian.org/debian bullseye main" > /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends curl ca-certificates
+# Install curl and netstat for healthcheck and debugging
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    net-tools \
+    iputils-ping \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN curl -L https://github.com/duckdb/duckdb/releases/download/v1.2.1/duckdb_cli-linux-amd64.zip -o duckdb.zip && \
-    apt-get install -y unzip xdg-utils && \
-    unzip duckdb.zip && \
-    chmod +x duckdb && \
-    mv duckdb /usr/local/bin/ && \
-    rm duckdb.zip
+# Copy requirements file
+COPY duckdb-image/requirements.txt .
 
-# Create an entrypoint script that starts the UI server without browser opening
-RUN echo '#!/bin/bash\n\
-echo "Starting DuckDB UI server..."\n\
-duckdb -c "CALL start_ui_server();"\n\
-# Keep container running\n\
-tail -f /dev/null' > /entrypoint.sh && \
-    chmod +x /entrypoint.sh
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN duckdb --version
+# Create a non-root user
+RUN useradd -m -u 1000 duckdb && \
+    chown -R duckdb:duckdb /app
 
-# Use the entrypoint script for container start
-ENTRYPOINT ["/entrypoint.sh"]
+# Switch to non-root user
+USER duckdb
+
+# Create a script to initialize DuckDB
+COPY --chown=duckdb:duckdb duckdb-image/main.py /app/init.py
+
+# Expose the DuckDB UI server port
+EXPOSE 4213
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV DOCKER_DEFAULT_IPV4=1
+ENV DUCKDB_UI_HOST=0.0.0.0
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:4213/ || exit 1
+
+# Run the initialization script
+CMD ["python", "/app/init.py"]

@@ -50,6 +50,7 @@ spec:
       labels:
         {{- include "library-chart.selectorLabels" . | nindent 8 }}
     spec:
+      hostNetwork: true
       volumes:
         - name: config-files
           emptyDir: {}
