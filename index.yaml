@@ -3,13 +3,13 @@ entries:
   duckdb-ui:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-10T14:57:19.14817183Z"
+    created: "2025-05-05T07:23:53.7619564Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: A Helm chart for deploying DuckDB UI
-    digest: 1c8f03d473c5efcff9848dcbd4c4d98dbabf8b2d23b36e9541f6cdaf6fabd886
+    digest: 85034d992721517f59d97f9b6345145dc50f1b8781d4b3d6e1a3decf6e6a37bf
     icon: https://raw.githubusercontent.com/duckdb/duckdb/main/docs/_static/duckdb.svg
     name: duckdb-ui
     urls:
@@ -17,14 +17,14 @@ entries:
     version: 0.1.0
   jupyter-python:
   - apiVersion: v2
-    created: "2025-04-10T14:57:19.149479978Z"
+    created: "2025-05-05T07:23:53.763243442Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: The JupyterLab IDE with Python, Julia, and a collection of standard
       data science packages.
-    digest: 3d61c92fe8f2ee2cb381c94f5f6780ac19cca0404bf44232ce647291d2d7b8ad
+    digest: 82ee6c1ef8505d327895e02e4d61f5b2af961eaa4f9a16b22dd71e8ddb71291a
     home: https://jupyter.org/
     icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/jupyter.png
     keywords:
@@ -40,8 +40,8 @@ entries:
     version: 2.2.6
   library-chart:
   - apiVersion: v2
-    created: "2025-04-10T14:57:19.14981357Z"
-    digest: 844890abcf3b8c298fc08d1c1cd142f98d137caab38a5071bd39938ff0a2268f
+    created: "2025-05-05T07:23:53.763590678Z"
+    digest: 1b9afc2bc3260ef4609e87d45973bbc3fed3a3ae74ac233955471a97334f82b3
     name: library-chart
     type: library
     urls:
@@ -50,13 +50,13 @@ entries:
   marimo:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-10T14:57:19.150931774Z"
+    created: "2025-05-05T07:23:53.76470566Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: A Helm chart for deploying Marimo notebooks
-    digest: 744af726f2af2c91fee51ce8bb0eaf3a1fe295f6a43171d285e6f6157dc9b40f
+    digest: 788e0d678d90515cda611048d3643e0f0042a92fdc8c0181b506a94fc7182f82
     icon: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg
     name: marimo
     urls:
@@ -65,16 +65,27 @@ entries:
   marimo-dev:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-10T14:57:19.152101915Z"
+    created: "2025-05-05T07:23:53.765844207Z"
     dependencies:
     - name: library-chart
       repository: https://inseefrlab.github.io/helm-charts-interactive-services
       version: 1.6.8
     description: A Helm chart for deploying Marimo notebooks in dev mode
-    digest: d8fb4016b1ca07b858b53098298aff518785bee195663d073951467539f20664
+    digest: 293140d1a4ab7a56fcd968b898d19a458ba7f24f26473245d15ebef5a876f0d7
     icon: https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo.svg
     name: marimo-dev
     urls:
     - https://jimmyflatting.github.io/helm-charts/marimo-dev-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-10T14:57:19.146769786Z"
+  supabase:
+  - apiVersion: v2
+    created: "2025-05-05T07:23:53.768710979Z"
+    description: The open source Firebase alternative.
+    digest: a628f857692639591534a6af2a4f74374aab23fc0c9c2426dd5c1a45024673f5
+    icon: https://avatars.githubusercontent.com/u/54469796?s=280&v=4
+    name: supabase
+    type: application
+    urls:
+    - https://jimmyflatting.github.io/helm-charts/supabase-0.1.3.tgz
+    version: 0.1.3
+generated: "2025-05-05T07:23:53.760580432Z"
