@@ -43,6 +43,8 @@ jobs:
           helm template charts/marimo --values charts/marimo/values.yaml
           helm lint charts/duckdb --values charts/duckdb/values.yaml
           helm template charts/duckdb --values charts/duckdb/values.yaml
+          helm lint charts/supabase --values charts/supabase/values.yaml
+          helm template charts/supabase --values charts/supabase/values.yaml
 
       - name: Package charts
         run: |
